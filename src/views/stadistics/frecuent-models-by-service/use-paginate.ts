@@ -21,7 +21,7 @@ export default function usePaginate() {
   const fetchFrecuentModelsByService = useCallback(async () => {
     try {
       dispatch(setIsLoading(true));
-      const response = await getFrecuentModelsByService({ page, size: paginate.itemsPerPage });
+      const response = await getFrecuentModelsByService({ page, "per-page": paginate.itemsPerPage });
       setFrecuentModelsByService(response.items);
       setPaginate(response.paginate);
     } catch (error) {

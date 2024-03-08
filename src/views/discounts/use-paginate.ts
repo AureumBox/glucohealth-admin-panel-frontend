@@ -21,7 +21,7 @@ export default function usePaginate() {
   const fetchDiscounts = useCallback(async () => {
     try {
       dispatch(setIsLoading(true));
-      const response = await getPaginate({ page, size: paginate.itemsPerPage });
+      const response = await getPaginate({ page, "per-page": paginate.itemsPerPage });
       setDiscounts(response.items);
       setPaginate(response.paginate);
     } catch (error) {

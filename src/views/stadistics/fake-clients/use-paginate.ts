@@ -21,7 +21,7 @@ export default function usePaginate() {
   const fetchFakeClients = useCallback(async () => {
     try {
       dispatch(setIsLoading(true));
-      const response = await getFakeClients({ page, size: paginate.itemsPerPage });
+      const response = await getFakeClients({ page, "per-page": paginate.itemsPerPage });
       setFakeClients(response.items);
       setPaginate(response.paginate);
     } catch (error) {

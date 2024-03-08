@@ -21,7 +21,7 @@ export default function usePaginate() {
   const fetchBookings = useCallback(async () => {
     try {
       dispatch(setIsLoading(true));
-      const response = await getPaginate({ page, size: paginate.itemsPerPage });
+      const response = await getPaginate({ page, "per-page": paginate.itemsPerPage });
       setBookings(response.items);
       setPaginate(response.paginate);
     } catch (error) {

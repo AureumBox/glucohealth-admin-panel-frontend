@@ -24,7 +24,7 @@ export default function usePaginate() {
       dispatch(setIsLoading(true));
       const response = await getPaginate({
         page: page || 1,
-        size: paginate.itemsPerPage,
+        "per-page": paginate.itemsPerPage,
       });
       setItems(response.items);
       setPaginate(response.paginate);

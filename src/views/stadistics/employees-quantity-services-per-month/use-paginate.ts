@@ -21,7 +21,7 @@ export default function usePaginate() {
   const fetchBestSellingProducts = useCallback(async () => {
     try {
       dispatch(setIsLoading(true));
-      const response = await getBestSellingProducts({ page, size: paginate.itemsPerPage });
+      const response = await getBestSellingProducts({ page, "per-page": paginate.itemsPerPage });
       setBestSellingProducts(response.items);
       setPaginate(response.paginate);
     } catch (error) {

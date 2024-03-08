@@ -22,7 +22,7 @@ export default function usePaginate() {
     try {
       dispatch(setIsLoading(true));
       const response = await getPaginate(
-        { page, size: paginate.itemsPerPage },
+        { page, "per-page": paginate.itemsPerPage },
         { onlyForAgencyRif: null }
       );
       setEmployees(response.items);

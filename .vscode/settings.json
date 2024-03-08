@@ -4,7 +4,7 @@
   "eslint.enable": true,
   "eslint.codeActionsOnSave.mode": "all",
   "editor.codeActionsOnSave": {
-    "source.fixAll": false
+    "source.fixAll": "never"
   },
   "[javascript]": {
     "editor.formatOnPaste": false,
@@ -22,5 +22,10 @@
       "source.fixAll.eslint": true
     }
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "[javascript][typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  }
 }

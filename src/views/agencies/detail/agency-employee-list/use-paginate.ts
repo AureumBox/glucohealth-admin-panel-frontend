@@ -24,7 +24,7 @@ export default function usePaginate(onlyForAgencyRif: string | null) {
       dispatch(setIsLoading(true));
       const response = await getPaginate({
         page: page || 1,
-        size: paginate.itemsPerPage,
+        "per-page": paginate.itemsPerPage,
       }, {
         onlyForAgencyRif,
       });

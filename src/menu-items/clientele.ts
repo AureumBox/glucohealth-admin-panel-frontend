@@ -17,14 +17,14 @@ const other: MenuItem = {
           id: 'list-clients',
           title: 'Lista de clientes',
           type: MenuItemType.Item,
-          url: '/clients',
+          url: '/customers',
           breadcrumbs: false,
         },
         {
           id: 'create-clients',
           title: 'Crear cliente',
           type: MenuItemType.Item,
-          url: '/clients/create',
+          url: '/customers/create',
           breadcrumbs: false,
         }
       ]

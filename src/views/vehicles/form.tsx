@@ -8,7 +8,7 @@ import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import styled from "styled-components";
 import SelectField from "components/SelectField";
 import useModelsOptions from "core/models/use-models-options";
-import useCustomersOptions from "core/customers/use-customers-options";
+import useCustomersOptions from "hooks/customers/use-customers-options";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 

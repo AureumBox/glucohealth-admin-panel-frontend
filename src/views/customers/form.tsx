@@ -7,7 +7,7 @@ import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import styled from "styled-components";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import { Customer } from "core/customers/types";
+import { Customer } from "types/customer";
 
 const Form: FunctionComponent<Props> = ({
   className,

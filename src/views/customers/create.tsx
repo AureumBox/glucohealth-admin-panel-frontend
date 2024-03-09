@@ -16,9 +16,9 @@ import {
 import { useAppDispatch } from "../../store/index";
 import Form, { FormValues } from "./form";
 import { FormikHelpers } from "formik";
-import { Customer } from "core/customers/types";
+import { Customer } from "types/customer";
 
-const CreateClient: FunctionComponent<Props> = ({ className }) => {
+const CreateCustomer: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -97,7 +97,7 @@ interface Props {
   className?: string;
 }
 
-export default styled(CreateClient)`
+export default styled(CreateCustomer)`
   display: flex;
   flex-direction: column;
 

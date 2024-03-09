@@ -12,7 +12,7 @@ const CustomersPage: FunctionComponent<Props> = ({ className }) => {
   const { customers, paginate, setPage, fetchCustomers } = usePaginate();
 
   const goToCreate = useCallback(() => {
-    navigate("/clients/create");
+    navigate("/customers/create");
   }, [navigate]);
 
   return (

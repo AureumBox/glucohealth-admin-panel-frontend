@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import BackendError from "exceptions/backend-error";
 import { setIsLoading, setErrorMessage } from "store/customizationSlice";
 import { useAppDispatch } from "../../../store/index";
-import { Customer } from "core/customers/types";
+import { Customer } from "types/customer";
 import getCustomer from "services/customers/get-customer";
 
 export default function useClientByDni(clientDni: string | null) {

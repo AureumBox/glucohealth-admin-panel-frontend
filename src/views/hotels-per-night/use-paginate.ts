@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 // Own
-import { Customer } from "core/customers/types";
-import getPaginate from "services/customers/get-paginated-customers";
 import { PaginateData } from "services/types";
 import { useAppDispatch } from "store";
 import { setIsLoading, setErrorMessage } from "store/customizationSlice";
 import BackendError from "exceptions/backend-error";
+import { HotelPerNight } from "types/hotel-per-night";
+import getPaginatedHotelsPerNight from "services/hotels-per-night/get-paginated-hotel-per-night";
 
 export default function usePaginate() {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [hotelsPerNight, setHotelsPerNight] = useState<HotelPerNight[]>([]);
   const [paginate, setPaginate] = useState<PaginateData>({
     itemCount: 0,
     pageIndex: 1,
@@ -18,15 +18,15 @@ export default function usePaginate() {
     pageCount: 0,
   });
 
-  const fetchCustomers = useCallback(async () => {
+  const fetchHotelsPerNight = useCallback(async () => {
     try {
       dispatch(setIsLoading(true));
-      const response = await getPaginate({
+      const response = await getPaginatedHotelsPerNight({
         page,
         "per-page": paginate.itemsPerPage,
       });
-      console.log(response)
-      setCustomers(response.items);
+      console.log(response);
+      setHotelsPerNight(response.items);
       setPaginate(response.paginate);
     } catch (error) {
       if (error instanceof BackendError)
@@ -37,13 +37,13 @@ export default function usePaginate() {
   }, [dispatch, page, paginate.itemsPerPage]);
 
   useEffect(() => {
-    fetchCustomers();
-  }, [fetchCustomers]);
+    fetchHotelsPerNight();
+  }, [fetchHotelsPerNight]);
 
   return {
-    customers,
+    hotelsPerNight,
     paginate,
     setPage,
-    fetchCustomers,
+    fetchHotelsPerNight,
   };
 }

@@ -1,24 +1,19 @@
-//TODO: Implement this endpoint in the backend
-
 import axios from "axios";
 // Own
 import { API_BASE_URL } from "config/constants";
-import { Customer } from "types/customer";
 import BackendError from "exceptions/backend-error";
 import store from "store";
 
-const URL = `${API_BASE_URL}/customers/all`;
+const URL = `${API_BASE_URL}/services/hotels-per-night`;
 
-export default async function getAllCustomers(): Promise<Customer[]> {
+export default async function deleteHotelPerNight(id: string): Promise<void> {
   try {
-    const response = await axios.get<Customer[]>(URL, {
+    await axios.delete(`${URL}/${id}`, {
       headers: {
         Authorization: `Bearer ${store.getState().auth.token}`,
       },
     });
-    return response.data;
   } catch (error: unknown) {
-    console.log(error);
     throw new BackendError(error);
   }
 }

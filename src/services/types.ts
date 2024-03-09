@@ -20,13 +20,13 @@ export interface PaginatedResponse<T> {
   items: T[];
 }
 
-export interface BackendReponse<T> {
+export interface BackendResponse<T> {
   status: number;
   data: T;
 }
 
 export interface BackendPaginatedResponse<T>
-  extends BackendReponse<PaginateData & { items: T[] }> {}
+  extends BackendResponse<PaginateData & { items: T[] }> {}
 
 export type PaginateBody = {
   page?: number;

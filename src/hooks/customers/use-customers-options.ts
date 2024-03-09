@@ -1,5 +1,5 @@
 import { SelectOption } from "components/SelectField";
-import { Customer } from "core/customers/types";
+import { Customer } from "types/customer";
 import BackendError from "exceptions/backend-error";
 import { useCallback, useEffect, useState } from "react";
 import getAllCustomers from "services/customers/get-all-customers";

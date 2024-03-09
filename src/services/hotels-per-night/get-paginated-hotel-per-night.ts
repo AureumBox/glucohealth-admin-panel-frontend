@@ -2,7 +2,6 @@ import { backendPaginatedResponseToPaginatedResponse } from "adapters/backend-pa
 import axios from "axios";
 // Own
 import { API_BASE_URL } from "config/constants";
-import { Customer } from "types/customer";
 import BackendError from "exceptions/backend-error";
 import addQueryParams from "services/add-query-params";
 import {
@@ -11,19 +10,23 @@ import {
   PaginatedResponse,
 } from "services/types";
 import store from "store";
+import { HotelPerNight } from "types/hotel-per-night";
 
-const URL = `${API_BASE_URL}/customers`;
+const URL = `${API_BASE_URL}/services/hotels-per-night`;
 
-export default async function getPaginatedCustomers(
+export default async function getPaginatedHotelsPerNight(
   body: PaginateBody
-): Promise<PaginatedCustomers> {
+): Promise<PaginatedHotelsPerNight> {
   try {
     const urlPaginated = addQueryParams(URL, body);
-    const response = await axios.get<BackendPaginatedCustomers>(urlPaginated, {
-      headers: {
-        Authorization: `Bearer ${store.getState().auth.token}`,
-      },
-    });
+    const response = await axios.get<BackendPaginatedHotelsPerNight>(
+      urlPaginated,
+      {
+        headers: {
+          Authorization: `Bearer ${store.getState().auth.token}`,
+        },
+      }
+    );
     return backendPaginatedResponseToPaginatedResponse(response.data);
   } catch (error: unknown) {
     console.log(error);
@@ -31,5 +34,5 @@ export default async function getPaginatedCustomers(
   }
 }
 
-type BackendPaginatedCustomers = BackendPaginatedResponse<Customer>;
-type PaginatedCustomers = PaginatedResponse<Customer>;
+type BackendPaginatedHotelsPerNight = BackendPaginatedResponse<HotelPerNight>;
+type PaginatedHotelsPerNight = PaginatedResponse<HotelPerNight>;

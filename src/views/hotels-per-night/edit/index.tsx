@@ -13,21 +13,23 @@ import {
   setErrorMessage,
 } from "store/customizationSlice";
 import Form, { FormValues } from "../form";
-import editClient from "services/customers/edit-customer";
-import useClientByDni from "./use-client-by-dni";
-import useClientDni from "./use-client-dni";
+import useHotelPerNightById from "./use-hotel-per-night-by-id";
+import useHotelPerNightId from "./use-hotel-per-night-id";
 import { FormikHelpers } from "formik";
-import { Customer } from "core/customers/types";
+import { HotelPerNight } from "types/hotel-per-night";
+import editHotelPerNight, {
+  HotelPerNightPayload,
+} from "services/hotels-per-night/edit-hotel-per-night";
 
 const EditClient: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const clientDni = useClientDni();
-  const client = useClientByDni(clientDni);
+  const hotelPerNightId = useHotelPerNightId();
+  const hotelPerNight = useHotelPerNightById(hotelPerNightId);
 
   const onSubmit = useCallback(
     async (
-      values: Customer & { submit: null | string },
+      values: HotelPerNight & { submit: null | string },
       { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
     ) => {
       try {
@@ -35,10 +37,22 @@ const EditClient: FunctionComponent<Props> = ({ className }) => {
         setErrors({});
         setStatus({});
         setSubmitting(true);
-        await editClient(clientDni!, values);
-        navigate("/clients");
+        const payload: HotelPerNightPayload = {
+          serviceName: values.serviceName,
+          serviceDescription: values.serviceDescription,
+          serviceLocation: values.serviceLocation,
+          servicePrice: values.servicePrice,
+          serviceTimestamp: values.serviceTimestamp,
+          numberOfNights: values.numberOfNights,
+          numberOfStars: values.numberOfStars,
+          numberOfRooms: values.numberOfRooms,
+          allowedNumberOfPeoplePerRoom: values.allowedNumberOfPeoplePerRoom,
+          checkoutTimestamp: values.checkoutTimestamp,
+        };
+        await editHotelPerNight(hotelPerNightId!, payload);
+        navigate("/hotels-per-night");
         dispatch(
-          setSuccessMessage(`Cliente ${values.firstName} editado correctamente`)
+          setSuccessMessage(`Hotel ${values.serviceName} editado correctamente`)
         );
       } catch (error) {
         if (error instanceof BackendError) {
@@ -54,24 +68,24 @@ const EditClient: FunctionComponent<Props> = ({ className }) => {
         setSubmitting(false);
       }
     },
-    [clientDni, navigate, dispatch]
+    [hotelPerNightId, navigate, dispatch]
   );
 
   return (
     <div className={className}>
       <MainCard>
         <Typography variant="h3" component="h3">
-          Clientes
+          Hotel
         </Typography>
       </MainCard>
-      {client && (
+      {hotelPerNight && (
         <Form
           isUpdate={true}
           initialValues={{
-            ...client,
+            ...hotelPerNight,
             submit: null,
           }}
-          title={"Editar cliente"}
+          title={"Editar hotel"}
           onSubmit={onSubmit}
         />
       )}

@@ -1,19 +1,19 @@
 import axios from "axios";
 // Own
 import { API_BASE_URL } from "config/constants";
-import { Customer } from "types/customer";
 import BackendError from "exceptions/backend-error";
 import store from "store";
+import { HotelPerNight } from "types/hotel-per-night";
 import { BackendResponse } from "services/types";
 
-const URL = `${API_BASE_URL}/customers`;
+const URL = `${API_BASE_URL}/services/hotels-per-night`;
 
-export default async function editClient(
+export default async function editHotelPerNight(
   id: string,
-  body: CustomerPayload
-): Promise<Customer> {
+  body: HotelPerNightPayload
+): Promise<HotelPerNight> {
   try {
-    const response = await axios.patch<BackendResponse<Customer>>(
+    const response = await axios.patch<BackendResponse<HotelPerNight>>(
       `${URL}/${id}`,
       body,
       {
@@ -29,4 +29,4 @@ export default async function editClient(
   }
 }
 
-export type CustomerPayload = Omit<Customer, "id">;
+export type HotelPerNightPayload = Omit<HotelPerNight, "id">;

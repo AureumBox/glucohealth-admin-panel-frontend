@@ -1,6 +1,5 @@
 import { Button, Pagination } from "@mui/material";
 import DynamicTable from "components/DynamicTable";
-import { Customer } from "core/customers/types";
 import styled from "styled-components";
 // Own
 import { useAppDispatch } from "store/index";
@@ -14,8 +13,9 @@ import { FunctionComponent, useCallback, useState } from "react";
 import { PaginateData } from "services/types";
 import { IconEdit, IconTrash } from "@tabler/icons";
 import { useNavigate } from "react-router";
-import deleteCustomer from "services/customers/delete-customer";
 import DialogDelete from "components/dialogDelete";
+import { HotelPerNight } from "types/hotel-per-night";
+import deleteHotelPerNight from "services/hotels-per-night/delete-hotel-per-night";
 
 const Table: FunctionComponent<Prop> = ({
   items,
@@ -27,25 +27,25 @@ const Table: FunctionComponent<Prop> = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const [customerId, setCustomerId] = useState<string>("");
+  const [hotelPerNightId, setHotelPerNightId] = useState<string>("");
 
-  const handleOpen = useCallback((customerId: string) => {
+  const handleOpen = useCallback((hotelPerNightId: string) => {
     setOpen(true);
-    setCustomerId(customerId);
+    setHotelPerNightId(hotelPerNightId);
   }, []);
 
   const handleClose = useCallback(() => {
     setOpen(false);
-    setCustomerId("");
+    setHotelPerNightId("");
   }, []);
 
   const onDelete = useCallback(
-    async (customerId: string) => {
+    async (hotelPerNightId: string) => {
       try {
         dispatch(setIsLoading(true));
-        await deleteCustomer(customerId!);
+        await deleteHotelPerNight(hotelPerNightId!);
         //navigate('/clients');
-        dispatch(setSuccessMessage(`Cliente eliminado correctamente`));
+        dispatch(setSuccessMessage(`Hotel eliminado correctamente`));
       } catch (error) {
         if (error instanceof BackendError) {
           dispatch(setErrorMessage(error.getMessage()));
@@ -64,62 +64,67 @@ const Table: FunctionComponent<Prop> = ({
       <DynamicTable
         headers={[
           {
-            columnLabel: "DNI",
-            fieldName: "dni",
-            cellAlignment: "left",
-          },
-          {
             columnLabel: "Nombre",
-            fieldName: "firstName",
+            fieldName: "serviceName",
             cellAlignment: "left",
           },
           {
-            columnLabel: "Apellido",
-            fieldName: "lastName",
+            columnLabel: "Descripción",
+            fieldName: "serviceDescription",
             cellAlignment: "left",
           },
           {
-            columnLabel: "Correo electrónico",
-            fieldName: "email",
+            columnLabel: "Ubicación",
+            fieldName: "serviceLocation",
             cellAlignment: "left",
           },
           {
-            columnLabel: "Número telefónico",
-            fieldName: "phoneNumber",
+            columnLabel: "Precio",
+            fieldName: "servicePrice",
             cellAlignment: "left",
           },
           {
-            columnLabel: "Nacionalidad",
-            fieldName: "citizenship",
+            columnLabel: "Nro. de noches",
+            fieldName: "numberOfNights",
             cellAlignment: "left",
           },
           {
-            columnLabel: "Dirección",
-            fieldName: "address",
+            columnLabel: "Nro. de estrellas",
+            fieldName: "numberOfStars",
             cellAlignment: "left",
           },
           {
-            columnLabel: "Fecha de nacimiento",
+            columnLabel: "Personas por habitación",
+            fieldName: "allowedNumberOfPeoplePerRoom",
             cellAlignment: "left",
-            onRender: (row: Customer) => {
-              return new Date(row.birthdate).toISOString().split("T")[0];
-            },
+          },
+          {
+            columnLabel: "Fecha de entrada",
+            cellAlignment: "left",
+            onRender: (row: HotelPerNight) =>
+              new Date(row.serviceTimestamp).toISOString().split("T")[0],
+          },
+          {
+            columnLabel: "Fecha de salida",
+            cellAlignment: "left",
+            onRender: (row: HotelPerNight) =>
+              new Date(row.checkoutTimestamp).toISOString().split("T")[0],
           },
         ]}
         rows={items}
         components={[
-          (row: Customer) => (
+          (row: HotelPerNight) => (
             <Button
               color="primary"
               onClick={() => {
-                navigate("/clients/edit/" + row.id);
+                navigate("/hotels-per-night/edit/" + row.id);
               }}
               startIcon={<IconEdit />}
             >
               Editar
             </Button>
           ),
-          (row: Customer) => (
+          (row: HotelPerNight) => (
             <Button
               color="secondary"
               onClick={() => handleOpen(row.id)}
@@ -133,7 +138,7 @@ const Table: FunctionComponent<Prop> = ({
       <DialogDelete
         handleClose={handleClose}
         onDelete={() => {
-          onDelete(customerId);
+          onDelete(hotelPerNightId);
         }}
         open={open}
       />
@@ -155,7 +160,7 @@ const Table: FunctionComponent<Prop> = ({
 };
 
 interface Prop {
-  items: Customer[];
+  items: HotelPerNight[];
   paginate: PaginateData;
   className?: string;
   onChange: (page: number) => void;

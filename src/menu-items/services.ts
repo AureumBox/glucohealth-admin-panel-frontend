@@ -28,20 +28,20 @@ const services: MenuItem = {
           type: MenuItemType.Collapse,
           icon: IconBuildingCommunity,
           breadcrumbs: false,
-          url: '/hotels',
+          url: '/hotels-per-night',
           children: [
             {
-              id: 'list-hotels',
+              id: 'list-hotels-per-night',
               title: 'Lista de hoteles',
               type: MenuItemType.Item,
-              url: '/hotels',
+              url: '/hotels-per-night',
               breadcrumbs: false
             },
             {
-              id: 'create-services',
+              id: 'create-hotel-per-night',
               title: 'Crear hotel',
               type: MenuItemType.Item,
-              url: '/hotels/create',
+              url: '/hotels-per-night/create',
               breadcrumbs: false
             }
           ]

@@ -27,10 +27,6 @@ import EditJob from "views/jobs/edit";
 import Managers from "views/managers";
 import CreateManager from "views/managers/create";
 import EditManager from "views/managers/edit";
-//Clients
-import Clients from "views/clients";
-import CreateClient from "views/clients/create";
-import EditClient from "views/clients/edit";
 //Employees
 import Employees from "views/employees";
 import CreateEmployee from "views/employees/create";
@@ -172,19 +168,6 @@ const GeneralRoutes: RouteObject[] = [
   {
     path: "managers/edit/:id",
     element: <EditManager />,
-  },
-  //Clientes
-  {
-    path: "customers",
-    element: <Clients />,
-  },
-  {
-    path: "customers/create",
-    element: <CreateClient />,
-  },
-  {
-    path: "customers/edit/:id",
-    element: <EditClient />,
   },
   //Empleados
   {

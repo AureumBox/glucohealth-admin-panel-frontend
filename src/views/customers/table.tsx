@@ -44,7 +44,7 @@ const Table: FunctionComponent<Prop> = ({
       try {
         dispatch(setIsLoading(true));
         await deleteCustomer(customerId!);
-        //navigate('/clients');
+        //navigate('/customers');
         dispatch(setSuccessMessage(`Cliente eliminado correctamente`));
       } catch (error) {
         if (error instanceof BackendError) {

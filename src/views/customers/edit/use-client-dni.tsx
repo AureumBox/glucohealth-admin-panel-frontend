@@ -9,7 +9,7 @@ export default function useClientDni() {
   useEffect(() => {
     console.log();
     if (!params.id) {
-      navigate("/clients");
+      navigate("/customers");
     }
 
     setClientDni(params.id as unknown as string);

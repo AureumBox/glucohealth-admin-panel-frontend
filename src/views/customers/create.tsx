@@ -44,7 +44,7 @@ const CreateCustomer: FunctionComponent<Props> = ({ className }) => {
         };
         console.log(payload);
         await createCustomer(payload);
-        navigate("/clients");
+        navigate("/customers");
         dispatch(
           setSuccessMessage(`Cliente ${values.firstName} creado correctamente`)
         );

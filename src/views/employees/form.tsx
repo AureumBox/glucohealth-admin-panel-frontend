@@ -15,7 +15,7 @@ import styled from "styled-components";
 import SelectField from "components/SelectField";
 import useAgencyOptions from "core/agencies/use-agency-options";
 import useJobOptions from "core/jobs/use-jobs-options";
-import useServicesOptions from "core/services/use-services-options";
+import useServicesOptions from "core/old-services/use-services-options";
 import { IconCirclePlus } from "@tabler/icons";
 
 const USE_AUTOCOMPLETES = false;

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 import { setErrorMessage, setIsLoading, setSuccessMessage } from 'store/customizationSlice';
 import { useAppDispatch } from '../../store/index';
 import Form from './form';
-import createService from 'services/services/create-service';
+import createService from 'services/old-services/create-service';
 
 const CreateService: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();

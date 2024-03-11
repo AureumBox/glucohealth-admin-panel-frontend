@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 import { setErrorMessage, setIsLoading, setSuccessMessage } from 'store/customizationSlice';
 import { useAppDispatch } from '../../../store/index';
 import Form from '../form';
-import editService from 'services/services/edit-service';
+import editService from 'services/old-services/edit-service';
 import useServiceId from './use-service-id';
 import useServiceById from './use-service-by-id';
 import convertActivitiesToActivityInput from '../form/convert-activities-to-input-activities';

@@ -11,7 +11,7 @@ import { useAppDispatch } from 'store';
 import { setErrorMessage, setIsLoading, setSuccessMessage } from 'store/customizationSlice';
 import BackendError from 'exceptions/backend-error';
 import DialogDelete from 'components/dialogDelete';
-import deleteService from 'services/services/delete-service';
+import deleteService from 'services/old-services/delete-service';
 
 const Table: FunctionComponent<Prop> = ({ items, paginate, fetchItems, className, onChange }) => {
     const navigate = useNavigate();

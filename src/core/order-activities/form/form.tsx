@@ -7,7 +7,7 @@ import styled from 'styled-components';
 //import useServicesOptions from 'core/services/use-services-options';
 import SelectField from 'components/SelectField';
 import useEmployeesOptions from 'core/employees/use-employees-options';
-import useServicesOptions from 'core/services/use-services-options';
+import useServicesOptions from 'core/old-services/use-services-options';
 import useActivitiesOptionsForServiceId from 'core/activities/use-activities-options-for-service-id';
 
 const USE_AUTOCOMPLETES = false;

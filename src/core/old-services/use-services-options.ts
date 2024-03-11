@@ -1,7 +1,7 @@
 import { SelectOption } from "components/SelectField";
 import BackendError from "exceptions/backend-error";
 import { useCallback, useEffect, useState } from "react";
-import getAllServices from "services/services/get-all-services";
+import getAllServices from "services/old-services/get-all-services";
 import { useAppDispatch } from "store";
 import { setErrorMessage, setIsLoading } from "store/customizationSlice";
 import { PaginatedService } from "../../types/types";

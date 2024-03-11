@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 // Own
-import getPaginate from 'services/services/get-paginate';
+import getPaginate from 'services/old-services/get-paginate';
 import { PaginateData } from 'services/types';
 import { useAppDispatch } from 'store';
 import { setIsLoading, setErrorMessage } from 'store/customizationSlice';

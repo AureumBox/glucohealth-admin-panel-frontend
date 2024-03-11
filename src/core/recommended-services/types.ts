@@ -1,4 +1,4 @@
-import { Service } from 'core/services/types';
+import { Service } from 'types/types';
 
 export interface RecommendedService {
   serviceId: number;

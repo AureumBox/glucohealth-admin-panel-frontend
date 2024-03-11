@@ -7,7 +7,6 @@ export interface Service {
   totalCost: number
   createdAt: string
   activities: Activity[]
-  bookings: Booking[]
 }
 
 export interface PaginatedService extends Omit<Service, 'bookings' | 'activities'> {}

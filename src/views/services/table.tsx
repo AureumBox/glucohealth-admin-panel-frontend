@@ -6,7 +6,7 @@ import { FunctionComponent, useCallback, useState } from 'react';
 import { PaginateData } from 'services/types';
 import { IconEdit, IconTrash } from '@tabler/icons';
 import { useNavigate } from 'react-router';
-import { PaginatedService } from 'core/services/types';
+import { PaginatedService } from 'types/types';
 import { useAppDispatch } from 'store';
 import { setErrorMessage, setIsLoading, setSuccessMessage } from 'store/customizationSlice';
 import BackendError from 'exceptions/backend-error';

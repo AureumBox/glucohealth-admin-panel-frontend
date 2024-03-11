@@ -1,7 +1,7 @@
 import axios from "axios";
 // Own
 import { API_BASE_URL } from "config/constants";
-import { PaginatedService } from "core/services/types";
+import { PaginatedService } from "types/types";
 import BackendError from "exceptions/backend-error";
 import addQueryParams from "services/add-query-params";
 import { PaginateBody, PaginatedResponse } from "services/types";

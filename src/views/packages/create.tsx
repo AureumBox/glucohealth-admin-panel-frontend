@@ -1,0 +1,116 @@
+import { FunctionComponent, useCallback } from "react";
+// material-ui
+import MainCard from "components/cards/MainCard";
+import { Typography } from "@mui/material";
+import styled from "styled-components";
+import BackendError from "exceptions/backend-error";
+import { useNavigate } from "react-router";
+import {
+  setErrorMessage,
+  setIsLoading,
+  setSuccessMessage,
+} from "store/customizationSlice";
+import { useAppDispatch } from "../../store/index";
+import Form, { FormValues } from "./form";
+import { FormikHelpers } from "formik";
+import { Package } from "types/package";
+import createPackage, {
+  PackagePayload,
+} from "services/packages/create-package";
+
+const CreatePackage: FunctionComponent<Props> = ({ className }) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const onSubmit = useCallback(
+    async (
+      values: Package & { submit: string | null },
+      { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
+    ) => {
+      try {
+        dispatch(setIsLoading(true));
+        setErrors({});
+        setStatus({});
+        setSubmitting(true);
+        const payload: PackagePayload = {
+          name: values.name,
+          description: values.description,
+          appliedDiscountPercentage: values.appliedDiscountPercentage,
+          containedServices: values.containedServices,
+          price: values.price,
+        };
+        console.log(payload);
+        await createPackage(payload);
+        navigate("/packages");
+        dispatch(
+          setSuccessMessage(`Paquete ${values.name} creado correctamente`)
+        );
+      } catch (error) {
+        if (error instanceof BackendError) {
+          setErrors({
+            ...error.getFieldErrorsMessages(),
+            submit: error.getMessage(),
+          });
+          dispatch(setErrorMessage(error.getMessage()));
+        }
+        setStatus({ success: "false" });
+      } finally {
+        dispatch(setIsLoading(false));
+        setSubmitting(false);
+      }
+    },
+    [dispatch, navigate]
+  );
+
+  return (
+    <div className={className}>
+      <MainCard>
+        <Typography variant="h3" component="h3">
+          Paquetes
+        </Typography>
+      </MainCard>
+
+      <Form
+        initialValues={{
+          id: "",
+          name: "",
+          description: "",
+          appliedDiscountPercentage: 0,
+          containedServices: [],
+          price: 0,
+          submit: null,
+        }}
+        title={"Crear paquete"}
+        onSubmit={onSubmit}
+      />
+    </div>
+  );
+};
+
+interface Props {
+  className?: string;
+}
+
+export default styled(CreatePackage)`
+  display: flex;
+  flex-direction: column;
+
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-data {
+    margin-top: 16px;
+  }
+
+  .form-header-card {
+    width: 100%;
+  }
+
+  .form-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+`;

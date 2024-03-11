@@ -1,7 +1,7 @@
 import axios from 'axios';
 // Own
 import { API_BASE_URL } from 'config/constants';
-import { Service } from 'core/services/types';
+import { Service } from 'types/types';
 import BackendError from 'exceptions/backend-error';
 import store from 'store';
 

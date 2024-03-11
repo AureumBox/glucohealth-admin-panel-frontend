@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import BackendError from 'exceptions/backend-error';
 import { setIsLoading, setErrorMessage } from 'store/customizationSlice';
 import { useAppDispatch } from 'store';
-import { Service } from 'core/services/types';
+import { Service } from 'types/types';
 import getService from 'services/services/get-service';
 
 export default function useServiceById(serviceId: number | null) {

@@ -1,4 +1,4 @@
-import { ShortService } from "core/services/types"
+import { ShortService } from "types/types"
 
 export interface Booking {
   bookingId: number

@@ -7,7 +7,6 @@ import { RouteObject } from "react-router";
 
 // pages
 import Logout from "views/logout";
-import GeneralRoutes from "./general-routes";
 import CompanyRoutes from "./company-routes";
 import ClienteleRoutes from "./clientele-routes";
 import ServicesRoutes from "./services-routes";
@@ -30,18 +29,12 @@ const MainRoutes: RouteObject = {
     },
     {
       path: "dashboard",
-      children: [
-        {
-          path: "default",
-          element: <DashboardDefault />,
-        },
-      ],
+      element: <DashboardDefault />,
     },
     {
       path: "sample-page",
       element: <SamplePage />,
     },
-    ...GeneralRoutes,
     ...ClienteleRoutes,
     ...ServicesRoutes,
     ...CompanyRoutes,

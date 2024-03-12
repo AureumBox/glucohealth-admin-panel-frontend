@@ -8,6 +8,10 @@ import EditHotelPerNight from "views/hotels-per-night/edit";
 import PackagesPage from "views/packages";
 import CreatePackage from "views/packages/create";
 import EditPackage from "views/packages/edit";
+//staff
+import StaffPage from "views/staff";
+import CreateStaffPage from "views/staff/create";
+import EditStaffPage from "views/staff/edit";
 
 const ServicesRoutes: RouteObject[] = [
   {
@@ -33,6 +37,18 @@ const ServicesRoutes: RouteObject[] = [
   {
     path: "packages/edit/:id",
     element: <EditPackage />,
+  },
+  {
+    path: "staff",
+    element: <StaffPage />,
+  },
+  {
+    path: "staff/create",
+    element: <CreateStaffPage />,
+  },
+  {
+    path: "staff/edit/:id",
+    element: <EditStaffPage />,
   },
 ];
 

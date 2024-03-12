@@ -1,8 +1,16 @@
-import { useField, FieldInputProps } from 'formik';
-import { FormControl, InputLabel, Select, MenuItem, Chip, SelectChangeEvent, Input } from '@mui/material';
+import { useField, FieldInputProps } from "formik";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Chip,
+  SelectChangeEvent,
+  Input,
+} from "@mui/material";
 
 interface Option {
-  value: string;
+  value: string | number;
   label: string;
 }
 
@@ -12,11 +20,15 @@ interface MultipleSelectProps {
   options: Option[];
 }
 
-const MultipleSelect = ({ label, name, options }: MultipleSelectProps) => {
+export const MultipleSelect = ({
+  label,
+  name,
+  options,
+}: MultipleSelectProps) => {
   const [field, meta, helpers] = useField<string[]>(name);
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    helpers.setValue(['event.target.value']);
+    helpers.setValue(["event.target.value"]);
   };
 
   return (
@@ -30,7 +42,10 @@ const MultipleSelect = ({ label, name, options }: MultipleSelectProps) => {
         renderValue={(selected) => (
           <div>
             {(selected as string[]).map((value) => (
-              <Chip key={value} label={options.find((option) => option.value === value)?.label} />
+              <Chip
+                key={value}
+                label={options.find((option) => option.value === value)?.label}
+              />
             ))}
           </div>
         )}
@@ -41,7 +56,9 @@ const MultipleSelect = ({ label, name, options }: MultipleSelectProps) => {
           </MenuItem>
         ))}
       </Select>
-      {meta.touched && !!meta.error && <div className="field-error">{meta.error}</div>}
+      {meta.touched && !!meta.error && (
+        <div className="field-error">{meta.error}</div>
+      )}
     </FormControl>
   );
 };

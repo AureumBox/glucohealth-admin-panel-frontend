@@ -3,8 +3,8 @@ import BackendError from "exceptions/backend-error";
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "store";
 import { setErrorMessage, setIsLoading } from "store/customizationSlice";
-import { Employee } from "./types";
-import getAllEmployees, { Body } from "services/employees/get-all-employees";
+import getAllEmployees, { Body } from "services/staff/get-all-employees";
+import { Employee } from "types/employee";
 
 export default function useEmployeesOptions(body: Body): SelectOption[] {
   const [items, setItems] = useState<Employee[]>([]);
@@ -22,7 +22,7 @@ export default function useEmployeesOptions(body: Body): SelectOption[] {
       if (error instanceof BackendError)
         dispatch(setErrorMessage(error.getMessage()));
     } finally {
-     dispatch(setIsLoading(false));
+      dispatch(setIsLoading(false));
     }
   }, [dispatch, body.onlyForAgencyRif, body.employeeDni]);
 
@@ -30,8 +30,8 @@ export default function useEmployeesOptions(body: Body): SelectOption[] {
     fetchItems();
   }, [fetchItems]);
 
-  return items.map(item => ({
-    label: item.name,
-    value: item.employeeDni,
+  return items.map((item) => ({
+    label: `${item.firstName} ${item.lastName}`,
+    value: item.id,
   }));
 }

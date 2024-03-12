@@ -13,7 +13,7 @@ const dashboard: MenuItem = {
       id: 'default',
       title: 'Dashboard',
       type: MenuItemType.Item,
-      url: '/dashboard/default',
+      url: '/dashboard',
       icon: icons.IconDashboard,
       breadcrumbs: false
     }

@@ -27,7 +27,7 @@ const EditEmployee: FunctionComponent<Props> = ({ className }) => {
 
   const onSubmit = useCallback(
     async (
-      values: Omit<EmployeePayload, "occupations"> & {
+      values: Omit<EmployeePayload, "occupationsActions" | "occupations"> & {
         occupations: OccupationsEnum[];
         submit: null | string;
       },
@@ -38,11 +38,29 @@ const EditEmployee: FunctionComponent<Props> = ({ className }) => {
         setErrors({});
         setStatus({});
         setSubmitting(true);
-        const payload = {
-          ...values,
-          occupations: values.occupations.map((o) => ({
-            occupationName: o,
-          })),
+
+        const prevOccupations = employee!.occupations.map(
+          (o) => o.occupationName
+        )!;
+
+        const { occupations: _, ...neededValues } = values;
+
+        const payload: EmployeePayload = {
+          ...neededValues,
+          occupationsActions: [
+            ...values.occupations
+              .filter((o) => !prevOccupations.includes(o))
+              .map((o: OccupationsEnum) => ({
+                occupationName: o,
+                action: "add" as const,
+              })),
+            ...prevOccupations
+              .filter((o) => !values.occupations.includes(o))
+              .map((o: OccupationsEnum) => ({
+                occupationName: o,
+                action: "remove" as const,
+              })),
+          ],
         };
         await editEmployee(employeeId!, payload);
         navigate("/staff");
@@ -65,7 +83,7 @@ const EditEmployee: FunctionComponent<Props> = ({ className }) => {
         setSubmitting(false);
       }
     },
-    [employeeId, navigate, dispatch]
+    [employeeId, navigate, dispatch, employee]
   );
 
   return (

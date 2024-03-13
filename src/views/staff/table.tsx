@@ -16,9 +16,7 @@ import { useNavigate } from "react-router";
 import deleteCustomer from "services/customers/delete-customer";
 import DialogDelete from "components/dialogDelete";
 import { Employee } from "types/employee";
-import useOccupationsOptions, {
-  occupationsWithLabel,
-} from "core/occupations/use-occupations-options";
+import { occupationsWithLabel } from "core/occupations/use-occupations-options";
 
 const Table: FunctionComponent<Prop> = ({
   items,

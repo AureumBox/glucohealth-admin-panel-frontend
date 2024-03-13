@@ -1,17 +1,23 @@
 import axios from "axios";
 // Own
 import { API_BASE_URL } from "config/constants";
-import { Employee } from "types/employee";
 import BackendError from "exceptions/backend-error";
+import addQueryParams from "services/add-query-params";
 import { BackendResponse } from "services/types";
 import store from "store";
+import { Occupation } from "types/occupation";
 
 const URL = `${API_BASE_URL}/staff`;
 
-export default async function deleteEmployee(id: string): Promise<Employee> {
+export default async function getEmployeeOcupations(
+  employeeId: string
+): Promise<Occupation[]> {
   try {
-    const response = await axios.delete<BackendResponse<Employee>>(
-      `${URL}/${id}`,
+    const response = await axios.get<BackendResponse<Occupation[]>>(
+      addQueryParams(`${URL}/${employeeId}/occupations`, {
+        page: 1,
+        "per-page": 3,
+      }),
       {
         headers: {
           Authorization: `Bearer ${store.getState().auth.token}`,

@@ -79,8 +79,10 @@ const Table: FunctionComponent<Prop> = ({
           },
           {
             columnLabel: "Servicios",
-            fieldName: "containedServices",
             cellAlignment: "left",
+            onRender: (row: Package) => {
+              return row.containedServices.map((s) => s.serviceId).join(", ");
+            },
           },
           {
             columnLabel: "Precio",

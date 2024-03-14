@@ -56,11 +56,13 @@ const Form: FunctionComponent<Props> = ({
           handleChange,
           handleSubmit,
           isSubmitting,
+          setFieldValue,
           touched,
           values,
         }) => (
           <form noValidate onSubmit={handleSubmit}>
             <MainCard className={"form-data"} title={title}>
+              <code>{JSON.stringify(values)}</code>
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="name"
@@ -115,6 +117,7 @@ const Form: FunctionComponent<Props> = ({
                   id="containedServices"
                   name="containedServices"
                   multiple
+                  unselectable="on"
                   value={values.containedServices}
                   onChange={handleChange}
                   renderValue={(selected) =>
@@ -125,41 +128,48 @@ const Form: FunctionComponent<Props> = ({
                       .join(", ")
                   }
                 >
-                  {services.map((occupation) => (
-                    <MenuItem key={occupation.value} value={occupation.value}>
-                      <ListItemText primary={occupation.label} />
+                  {services.map((s) => (
+                    <MenuItem key={s.value} value={s.value}>
+                      <ListItemText primary={s.label} />
                     </MenuItem>
                   ))}
                 </Select>
                 <List>
                   {values.containedServices.map((cs) => (
-                    <ListItem className="flex gap-2 justify-around">
-                      <ListItemText>
+                    <ListItem className="flex gap-2 justify-center">
+                      <ListItemText className="font-bold">
                         {services.find((opt) => opt.value === cs)?.label}
                       </ListItemText>
-                      <TextField
-                        id={`${cs}-service-quantity`}
-                        label="Cantidad"
-                        variant="outlined"
-                        onBlur={handleBlur}
-                        value={1}
-                      ></TextField>
+                      <div>
+                        <Button
+                          disabled={
+                            values.servicesQuantities[cs] <= 1 ||
+                            !values.servicesQuantities[cs]
+                          }
+                          onClick={() =>
+                            setFieldValue("servicesQuantities", {
+                              ...values.servicesQuantities,
+                              [cs]: values.servicesQuantities[cs] - 1,
+                            })
+                          }
+                        >
+                          -
+                        </Button>
+                        <strong>{values.servicesQuantities[cs] ?? 1}</strong>
+                        <Button
+                          onClick={() =>
+                            setFieldValue("servicesQuantities", {
+                              ...values.servicesQuantities,
+                              [cs]: (values.servicesQuantities[cs] ?? 1) + 1,
+                            })
+                          }
+                        >
+                          +
+                        </Button>
+                      </div>
                     </ListItem>
                   ))}
                 </List>
-              </FormControl>
-              <FormControl className="field-form" fullWidth>
-                <TextField
-                  id="price"
-                  label="Precio"
-                  variant="outlined"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.price}
-                  helperText={touched.price ? errors.price : ""}
-                  error={touched.price && !!errors.price}
-                  name="price"
-                />
               </FormControl>
             </MainCard>
             <MainCard className={"form-data flex-column"}>
@@ -185,7 +195,10 @@ interface Props {
   initialValues: FormValues;
 }
 
-export interface FormValues extends Package {
+export interface FormValues
+  extends Omit<Package, "containedServices" | "price"> {
+  containedServices: string[];
+  servicesQuantities: Record<string, number>;
   submit: string | null;
 }
 

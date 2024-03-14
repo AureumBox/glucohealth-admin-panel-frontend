@@ -13,7 +13,6 @@ import {
 import { useAppDispatch } from "../../store/index";
 import Form, { FormValues } from "./form";
 import { FormikHelpers } from "formik";
-import { Package } from "types/package";
 import createPackage, {
   PackagePayload,
 } from "services/packages/create-package";
@@ -24,7 +23,7 @@ const CreatePackage: FunctionComponent<Props> = ({ className }) => {
 
   const onSubmit = useCallback(
     async (
-      values: Package & { submit: string | null },
+      values: FormValues,
       { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
     ) => {
       try {
@@ -36,8 +35,10 @@ const CreatePackage: FunctionComponent<Props> = ({ className }) => {
           name: values.name,
           description: values.description,
           appliedDiscountPercentage: values.appliedDiscountPercentage,
-          containedServices: values.containedServices,
-          price: values.price,
+          containedServices: values.containedServices.map((csId) => ({
+            serviceId: csId,
+            amountContained: values.servicesQuantities[csId] ?? 1,
+          })),
         };
         console.log(payload);
         await createPackage(payload);
@@ -77,7 +78,7 @@ const CreatePackage: FunctionComponent<Props> = ({ className }) => {
           description: "",
           appliedDiscountPercentage: 0,
           containedServices: [],
-          price: 0,
+          servicesQuantities: {},
           submit: null,
         }}
         title={"Crear paquete"}

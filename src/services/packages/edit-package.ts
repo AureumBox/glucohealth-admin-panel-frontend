@@ -29,4 +29,4 @@ export default async function editPackage(
   }
 }
 
-export type PackagePayload = Omit<Package, "id">;
+export type PackagePayload = Omit<Package, "id" | "price">;

@@ -3,6 +3,11 @@ export interface Package {
   name: string;
   description: string;
   appliedDiscountPercentage: number;
-  containedServices: string[];
+  containedServices: ContainedService[];
   price: number;
+}
+
+export interface ContainedService {
+  serviceId: string;
+  amountContained: number;
 }

@@ -14,7 +14,7 @@ export default function useServicesOptions(): SelectOption[] {
     try {
       dispatch(setIsLoading(true));
       const response = await getAllServices();
-      console.log(response)
+      console.log(response);
       setItems(response);
     } catch (error) {
       if (error instanceof BackendError)

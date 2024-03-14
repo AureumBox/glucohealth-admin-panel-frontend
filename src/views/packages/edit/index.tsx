@@ -16,8 +16,7 @@ import Form, { FormValues } from "../form";
 import usePackageById from "./use-package-by-id";
 import usePackageId from "./use-package-id";
 import { FormikHelpers } from "formik";
-import { Package } from "types/package";
-import editPackage from "services/packages/edit-package";
+import editPackage, { PackagePayload } from "services/packages/edit-package";
 
 const EditPackage: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ const EditPackage: FunctionComponent<Props> = ({ className }) => {
 
   const onSubmit = useCallback(
     async (
-      values: Package & { submit: null | string },
+      values: FormValues,
       { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
     ) => {
       try {
@@ -35,7 +34,16 @@ const EditPackage: FunctionComponent<Props> = ({ className }) => {
         setErrors({});
         setStatus({});
         setSubmitting(true);
-        await editPackage(packageId!, values);
+        const payload: PackagePayload = {
+          name: values.name,
+          description: values.description,
+          appliedDiscountPercentage: values.appliedDiscountPercentage,
+          containedServices: values.containedServices.map((csId) => ({
+            serviceId: csId,
+            amountContained: values.servicesQuantities[csId] ?? 1,
+          })),
+        };
+        await editPackage(packageId!, payload);
         navigate("/packages");
         dispatch(
           setSuccessMessage(`Paquete ${values.name} editado correctamente`)
@@ -68,7 +76,19 @@ const EditPackage: FunctionComponent<Props> = ({ className }) => {
         <Form
           isUpdate={true}
           initialValues={{
-            ...fetchedPackage,
+            ...{
+              ...fetchedPackage,
+              containedServices: fetchedPackage.containedServices.map(
+                (cs) => cs.serviceId
+              ),
+            },
+            servicesQuantities: fetchedPackage.containedServices.reduce(
+              (p: Record<string, number>, c) => {
+                p[c.serviceId] = c.amountContained;
+                return p;
+              },
+              {}
+            ),
             submit: null,
           }}
           title={"Editar paquete"}

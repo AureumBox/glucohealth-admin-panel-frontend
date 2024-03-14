@@ -133,4 +133,9 @@ export interface SelectOption {
   label: string;
 }
 
+export interface ObjectSelectOption<T> {
+  value: T;
+  label: string;
+}
+
 export default CustomSelect;

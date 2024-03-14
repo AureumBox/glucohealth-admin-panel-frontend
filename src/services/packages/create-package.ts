@@ -24,9 +24,4 @@ export default async function createPackage(
   }
 }
 
-export type PackagePayload = Omit<Package, "id"> & {
-  containedServices: {
-    serviceId: string;
-    amountContained: number;
-  }[];
-};
+export type PackagePayload = Omit<Package, "id" | "price">;

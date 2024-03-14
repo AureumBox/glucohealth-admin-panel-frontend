@@ -13,7 +13,7 @@ export default async function editPackage(
   body: PackagePayload
 ): Promise<Package> {
   try {
-    const response = await axios.patch<BackendResponse<Package>>(
+    const response = await axios.put<BackendResponse<Package>>(
       `${URL}/${id}`,
       body,
       {

@@ -7,7 +7,6 @@ import { RouteObject } from "react-router";
 
 // pages
 import Logout from "views/logout";
-import CompanyRoutes from "./company-routes";
 import ClienteleRoutes from "./clientele-routes";
 import ServicesRoutes from "./services-routes";
 
@@ -37,7 +36,6 @@ const MainRoutes: RouteObject = {
     },
     ...ClienteleRoutes,
     ...ServicesRoutes,
-    ...CompanyRoutes,
     {
       path: "logout",
       element: <Logout />,

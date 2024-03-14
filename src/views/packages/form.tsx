@@ -3,9 +3,21 @@ import * as Yup from "yup";
 import { Formik, FormikHelpers } from "formik";
 // material-ui
 import MainCard from "components/cards/MainCard";
-import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  List,
+  ListItem,
+  ListItemText,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import styled from "styled-components";
 import { Package } from "types/package";
+import useServicesOptions from "core/services/use-services-options";
 
 const Form: FunctionComponent<Props> = ({
   className,
@@ -14,6 +26,8 @@ const Form: FunctionComponent<Props> = ({
   initialValues,
   isUpdate,
 }) => {
+  const services = useServicesOptions();
+
   return (
     <div className={className}>
       <Formik<FormValues>
@@ -94,21 +108,45 @@ const Form: FunctionComponent<Props> = ({
                 />
               </FormControl>
               <FormControl className="field-form" fullWidth>
-                <TextField
-                  id="containedServices"
+                <InputLabel id="contained-services-label">Servicios</InputLabel>
+                <Select
+                  labelId="contained-services-label"
                   label="Servicios"
-                  variant="outlined"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.containedServices}
-                  helperText={
-                    touched.containedServices ? errors.containedServices : ""
-                  }
-                  error={
-                    touched.containedServices && !!errors.containedServices
-                  }
+                  id="containedServices"
                   name="containedServices"
-                />
+                  multiple
+                  value={values.containedServices}
+                  onChange={handleChange}
+                  renderValue={(selected) =>
+                    selected
+                      .map(
+                        (s) => services.find((opt) => opt.value === s)?.label
+                      )
+                      .join(", ")
+                  }
+                >
+                  {services.map((occupation) => (
+                    <MenuItem key={occupation.value} value={occupation.value}>
+                      <ListItemText primary={occupation.label} />
+                    </MenuItem>
+                  ))}
+                </Select>
+                <List>
+                  {values.containedServices.map((cs) => (
+                    <ListItem className="flex gap-2 justify-around">
+                      <ListItemText>
+                        {services.find((opt) => opt.value === cs)?.label}
+                      </ListItemText>
+                      <TextField
+                        id={`${cs}-service-quantity`}
+                        label="Cantidad"
+                        variant="outlined"
+                        onBlur={handleBlur}
+                        value={1}
+                      ></TextField>
+                    </ListItem>
+                  ))}
+                </List>
               </FormControl>
               <FormControl className="field-form" fullWidth>
                 <TextField

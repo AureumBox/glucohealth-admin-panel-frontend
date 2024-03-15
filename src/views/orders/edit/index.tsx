@@ -1,85 +1,80 @@
-import { FunctionComponent, useCallback } from 'react';
+import { FunctionComponent, useCallback } from "react";
 // material-ui
-import MainCard from 'components/cards/MainCard';
-import {  Typography } from '@mui/material';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router';
+import MainCard from "components/cards/MainCard";
+import { Typography } from "@mui/material";
+import styled from "styled-components";
+import { useNavigate } from "react-router";
 //own
-import BackendError from 'exceptions/backend-error';
-import { useAppDispatch } from 'store/index';
-import { setIsLoading, setSuccessMessage, setErrorMessage } from 'store/customizationSlice';
-import Form from '../form';
-import editOrder from 'services/orders/edit-order';
-import useOrderById from 'core/orders/use-order-by-id';
-import useOrderId from 'core/orders/use-order-id';
-import { FormikHelpers } from 'formik';
-import { FormValues } from '../form/types';
+import BackendError from "exceptions/backend-error";
+import { useAppDispatch } from "../../../store/index";
+import {
+  setIsLoading,
+  setSuccessMessage,
+  setErrorMessage,
+} from "store/customizationSlice";
+import Form, { FormValues } from "../form";
+import editClient from "services/customers/edit-customer";
+import useClientByDni from "./use-client-by-dni";
+import useClientDni from "./use-client-dni";
+import { FormikHelpers } from "formik";
+import { Customer } from "types/customer";
 
-const EditOrder: FunctionComponent<Props> = ({className}) => {
+const EditClient: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const orderId = useOrderId();
-  const order = useOrderById(orderId);
+  const clientDni = useClientDni();
+  const client = useClientByDni(clientDni);
 
-  const onSubmit = useCallback(async (values: any, { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>) => {
-    try {
-      dispatch(setIsLoading(true));
-      setErrors({});
-      setStatus({});
-      setSubmitting(true);
-      await editOrder(orderId!, {
-        entryTime: values.entryTime,
-        estimatedDeparture: values.estimatedDeparture,
-        bookingId: values.bookingId,
-        employeeDni: values.employeeDni,
-        responsibleDni: values.responsibleDni,
-        responsibleName: values.responsibleName,
-        realDeparture: values.realDeparture,
-      });
-      navigate('/orders');
-      dispatch(setSuccessMessage(`Reserva editada correctamente`));
-    } catch (error) {
-      if (error instanceof BackendError) {
-        setErrors({
-          ...error.getFieldErrorsMessages(),
-          submit: error.getMessage()
-        });
-        dispatch(setErrorMessage(error.getMessage()));
+  const onSubmit = useCallback(
+    async (
+      values: Customer & { submit: null | string },
+      { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
+    ) => {
+      try {
+        dispatch(setIsLoading(true));
+        setErrors({});
+        setStatus({});
+        setSubmitting(true);
+        await editClient(clientDni!, values);
+        navigate("/customers");
+        dispatch(
+          setSuccessMessage(`Cliente ${values.firstName} editado correctamente`)
+        );
+      } catch (error) {
+        if (error instanceof BackendError) {
+          setErrors({
+            ...error.getFieldErrorsMessages(),
+            submit: error.getMessage(),
+          });
+          dispatch(setErrorMessage(error.getMessage()));
+        }
+        setStatus({ success: "false" });
+      } finally {
+        dispatch(setIsLoading(false));
+        setSubmitting(false);
       }
-      setStatus({ success: 'false'});
-    } finally {
-      dispatch(setIsLoading(false));
-      setSubmitting(false);
-    }
-  }, [dispatch, orderId, navigate]);
+    },
+    [clientDni, navigate, dispatch]
+  );
 
   return (
     <div className={className}>
       <MainCard>
         <Typography variant="h3" component="h3">
-          Ordenes
+          Clientes
         </Typography>
       </MainCard>
-      {
-        order && (
-          <Form
-            isUpdate={true}
-            initialValues={{
-              entryTime: order.entryTime,
-              estimatedDeparture: order.estimatedDeparture,
-              bookingId: order.bookingId,
-              employeeDni: order.employeeDni,
-              responsibleDni: order.responsibleDni,
-              responsibleName: order.responsibleName,
-              activities: order.orderActivities,
-              realDeparture: order.realDeparture,
-              submit: null,
-            }}
-            title={'Editar reserva'}
-            onSubmit={onSubmit}
-          />
-        )
-      }
+      {client && (
+        <Form
+          isUpdate={true}
+          initialValues={{
+            ...client,
+            submit: null,
+          }}
+          title={"Editar cliente"}
+          onSubmit={onSubmit}
+        />
+      )}
     </div>
   );
 };
@@ -88,7 +83,7 @@ interface Props {
   className?: string;
 }
 
-export default styled(EditOrder)`
+export default styled(EditClient)`
   display: flex;
   flex-direction: column;
 
@@ -111,4 +106,3 @@ export default styled(EditOrder)`
     flex-direction: row;
   }
 `;
-

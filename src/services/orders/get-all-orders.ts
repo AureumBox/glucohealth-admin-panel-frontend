@@ -1,30 +1,24 @@
-import axios from 'axios';
+//TODO: Implement this endpoint in the backend
+
+import axios from "axios";
 // Own
-import { API_BASE_URL } from 'config/constants';
-import { Order } from 'core/orders/types';
-import BackendError from 'exceptions/backend-error';
-import addQueryParams from 'services/add-query-params';
-import store from 'store';
+import { API_BASE_URL } from "config/constants";
+import BackendError from "exceptions/backend-error";
+import store from "store";
+import { Order } from "types/order";
 
 const URL = `${API_BASE_URL}/orders/all`;
 
-export default async function getAllOrders(body?: Body): Promise<Order[]> {
+export default async function getAllCustomers(): Promise<Order[]> {
   try {
-    const urlPaginated = addQueryParams(URL, body || {});
-    const response = await axios.get<Order[]>(
-      urlPaginated, {
-        headers: {
-          Authorization: `Bearer ${store.getState().auth.token}`,
-        }
-      }
-    );
+    const response = await axios.get<Order[]>(URL, {
+      headers: {
+        Authorization: `Bearer ${store.getState().auth.token}`,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
+    console.log(error);
     throw new BackendError(error);
   }
-}
-
-export type Body = {
-  onlyWithoutBill: boolean,
-  includeOrderId: number | null,
 }

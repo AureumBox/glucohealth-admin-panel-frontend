@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 // Own
-import getPaginate from 'services/orders/get-paginate';
-import { PaginateData } from 'services/types';
-import { useAppDispatch } from 'store';
-import { setIsLoading, setErrorMessage } from 'store/customizationSlice';
-import BackendError from 'exceptions/backend-error';
-import { Order } from 'core/orders/types';
+import { PaginateData } from "services/types";
+import { useAppDispatch } from "store";
+import { setIsLoading, setErrorMessage } from "store/customizationSlice";
+import BackendError from "exceptions/backend-error";
+import { Order } from "types/order";
+import getPaginatedOrders from "services/orders/get-paginated-orders";
 
 export default function usePaginate() {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
-  const [items, setItems] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [paginate, setPaginate] = useState<PaginateData>({
     itemCount: 0,
     pageIndex: 1,
@@ -18,11 +18,15 @@ export default function usePaginate() {
     pageCount: 0,
   });
 
-  const fetchItems = useCallback(async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       dispatch(setIsLoading(true));
-      const response = await getPaginate({ page, "per-page": paginate.itemsPerPage });
-      setItems(response.items);
+      const response = await getPaginatedOrders({
+        page,
+        "per-page": paginate.itemsPerPage,
+      });
+      console.log(response);
+      setOrders(response.items);
       setPaginate(response.paginate);
     } catch (error) {
       if (error instanceof BackendError)
@@ -33,8 +37,13 @@ export default function usePaginate() {
   }, [dispatch, page, paginate.itemsPerPage]);
 
   useEffect(() => {
-    fetchItems();
-  }, [fetchItems]);
+    fetchOrders();
+  }, [fetchOrders]);
 
-  return { items, paginate, setPage, fetchItems };
+  return {
+    orders,
+    paginate,
+    setPage,
+    fetchOrders,
+  };
 }

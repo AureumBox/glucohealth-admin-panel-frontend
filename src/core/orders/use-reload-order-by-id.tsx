@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import BackendError from 'exceptions/backend-error';
 import { setIsLoading, setErrorMessage } from 'store/customizationSlice';
 import { useAppDispatch } from '../../store/index';
-import getOrder from 'services/orders/get-order';
+import getOrder from 'services/old-orders/get-order';
 import { Order } from './types';
 
 export default function useReloadOrderById(orderId: number | null) {

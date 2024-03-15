@@ -1,5 +1,5 @@
 import { setErrorMessage, setIsLoading } from "store/customizationSlice";
-import getAllOrders, { Body } from "services/orders/get-all-orders";
+import getAllOrders, { Body } from "services/old-orders/get-all-orders";
 import { useCallback, useEffect, useState } from "react";
 import { SelectOption } from "components/SelectField";
 import BackendError from "exceptions/backend-error";

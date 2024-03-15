@@ -80,8 +80,10 @@ const Table: FunctionComponent<Prop> = ({
           {
             columnLabel: "Servicios",
             cellAlignment: "left",
-            onRender: (row: Package) => {
-              return row.containedServices.map((s) => s.serviceId).join(", ");
+            onRender: (row) => {
+              return row.containedServices
+                .map((s: any) => s.service.serviceName)
+                .join(", ");
             },
           },
           {

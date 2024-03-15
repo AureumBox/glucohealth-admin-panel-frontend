@@ -82,7 +82,9 @@ const Table: FunctionComponent<Prop> = ({
             cellAlignment: "left",
             onRender: (row) => {
               return row.containedServices
-                .map((s: any) => s.service.serviceName)
+                .map(
+                  (s: any) => `${s.service.serviceName} (${s.amountContained})`
+                )
                 .join(", ");
             },
           },

@@ -14,7 +14,6 @@ import ServicesRoutes from "./services-routes";
 const DashboardDefault = Loadable(
   lazy(() => import("views/dashboard/Default"))
 );
-const SamplePage = Loadable(lazy(() => import("views/sample-page")));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -29,10 +28,6 @@ const MainRoutes: RouteObject = {
     {
       path: "dashboard",
       element: <DashboardDefault />,
-    },
-    {
-      path: "sample-page",
-      element: <SamplePage />,
     },
     ...ClienteleRoutes,
     ...ServicesRoutes,

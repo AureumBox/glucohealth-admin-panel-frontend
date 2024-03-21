@@ -14,8 +14,8 @@ import { PaginateData } from 'services/types'
 import { IconEdit, IconTrash } from '@tabler/icons'
 import { useNavigate } from 'react-router'
 import DialogDelete from 'components/dialogDelete'
-import { HotelPerNight } from 'types/hotel-per-night'
-import deleteHotelPerNight from 'services/hotels-per-night/delete-hotel-per-night'
+import { CarRental } from 'types/car-rental'
+import deleteCarRental from 'services/car-rentals/delete-car-rental'
 
 const Table: FunctionComponent<Prop> = ({
   items,
@@ -29,9 +29,9 @@ const Table: FunctionComponent<Prop> = ({
   const [open, setOpen] = useState<boolean>(false)
   const [hotelPerNightId, setHotelPerNightId] = useState<string>('')
 
-  const handleOpen = useCallback((hotelPerNightId: string) => {
+  const handleOpen = useCallback((carRentalId: string) => {
     setOpen(true)
-    setHotelPerNightId(hotelPerNightId)
+    setHotelPerNightId(carRentalId)
   }, [])
 
   const handleClose = useCallback(() => {
@@ -40,12 +40,12 @@ const Table: FunctionComponent<Prop> = ({
   }, [])
 
   const onDelete = useCallback(
-    async (hotelPerNightId: string) => {
+    async (carRentalId: string) => {
       try {
         dispatch(setIsLoading(true))
-        await deleteHotelPerNight(hotelPerNightId!)
+        await deleteCarRental(carRentalId!)
         //navigate('/clients');
-        dispatch(setSuccessMessage(`Hotel eliminado correctamente`))
+        dispatch(setSuccessMessage(`Vehículo eliminado correctamente`))
       } catch (error) {
         if (error instanceof BackendError) {
           dispatch(setErrorMessage(error.getMessage()))
@@ -74,62 +74,62 @@ const Table: FunctionComponent<Prop> = ({
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Ubicación',
-            fieldName: 'serviceLocation',
-            cellAlignment: 'left'
-          },
-          {
             columnLabel: 'Precio',
             fieldName: 'servicePrice',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Nro. de noches',
-            fieldName: 'numberOfNights',
+            columnLabel: 'Ubicación',
+            fieldName: 'serviceLocation',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Nro. de estrellas',
-            fieldName: 'numberOfStars',
+            columnLabel: 'Marca',
+            fieldName: 'carBrand',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Nro. de estrellas',
-            fieldName: 'numberOfRooms',
+            columnLabel: 'Modelo',
+            fieldName: 'carModel',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Personas por habitación',
-            fieldName: 'allowedNumberOfPeoplePerRoom',
+            columnLabel: 'Nro. de asientos',
+            fieldName: 'numberOfSeatsInTheCar',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Fecha de entrada',
+            columnLabel: 'Tipo de Motor',
+            fieldName: 'carEngineType',
+            cellAlignment: 'left'
+          },
+          {
+            columnLabel: 'Fecha de inicio',
             cellAlignment: 'left',
-            onRender: (row: HotelPerNight) =>
+            onRender: (row: CarRental) =>
               new Date(row.serviceTimestamp).toISOString().split('T')[0]
           },
           {
-            columnLabel: 'Fecha de salida',
+            columnLabel: 'Fecha de finalización',
             cellAlignment: 'left',
-            onRender: (row: HotelPerNight) =>
-              new Date(row.checkoutTimestamp).toISOString().split('T')[0]
+            onRender: (row: CarRental) =>
+              new Date(row.carReturnTimestamp).toISOString().split('T')[0]
           }
         ]}
         rows={items}
         components={[
-          (row: HotelPerNight) => (
+          (row: CarRental) => (
             <Button
               color='primary'
               onClick={() => {
-                navigate('/hotels-per-night/edit/' + row.id)
+                navigate('/car-rentals/edit/' + row.id)
               }}
               startIcon={<IconEdit />}
             >
               Editar
             </Button>
           ),
-          (row: HotelPerNight) => (
+          (row: CarRental) => (
             <Button
               color='secondary'
               onClick={() => handleOpen(row.id)}
@@ -165,7 +165,7 @@ const Table: FunctionComponent<Prop> = ({
 }
 
 interface Prop {
-  items: HotelPerNight[]
+  items: CarRental[]
   paginate: PaginateData
   className?: string
   onChange: (page: number) => void

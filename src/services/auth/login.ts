@@ -3,11 +3,10 @@ import axios from 'axios';
 import { API_BASE_URL } from 'config/constants';
 import BackendError from 'exceptions/backend-error';
 
-const URL = `${API_BASE_URL}/login`;
+const URL = `${API_BASE_URL}/auth/login`;
 
 export default async function login(body: LoginBody): Promise<LoginResponse> {
   try {
-    console.log('akak '+URL)
     const response = await axios.post<LoginResponse>(URL, body);
     return response.data;
   } catch (error: unknown) {
@@ -16,7 +15,7 @@ export default async function login(body: LoginBody): Promise<LoginResponse> {
 }
 
 export interface LoginBody {
-  email: string;
+  employeeEmail: string;
   password: string;
 }
 

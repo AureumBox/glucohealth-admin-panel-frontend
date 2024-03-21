@@ -14,8 +14,8 @@ import { PaginateData } from 'services/types'
 import { IconEdit, IconTrash } from '@tabler/icons'
 import { useNavigate } from 'react-router'
 import DialogDelete from 'components/dialogDelete'
-import { HotelPerNight } from 'types/hotel-per-night'
-import deleteHotelPerNight from 'services/hotels-per-night/delete-hotel-per-night'
+import { TrainTicket } from 'types/train-ticket'
+import deleteTrainTicket from 'services/train-tickets/delete-train-ticket'
 
 const Table: FunctionComponent<Prop> = ({
   items,
@@ -27,25 +27,25 @@ const Table: FunctionComponent<Prop> = ({
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [open, setOpen] = useState<boolean>(false)
-  const [hotelPerNightId, setHotelPerNightId] = useState<string>('')
+  const [trainTicketId, setTrainTicketId] = useState<string>('')
 
-  const handleOpen = useCallback((hotelPerNightId: string) => {
+  const handleOpen = useCallback((trainTicketId: string) => {
     setOpen(true)
-    setHotelPerNightId(hotelPerNightId)
+    setTrainTicketId(trainTicketId)
   }, [])
 
   const handleClose = useCallback(() => {
     setOpen(false)
-    setHotelPerNightId('')
+    setTrainTicketId('')
   }, [])
 
   const onDelete = useCallback(
-    async (hotelPerNightId: string) => {
+    async (trainTicketId: string) => {
       try {
         dispatch(setIsLoading(true))
-        await deleteHotelPerNight(hotelPerNightId!)
+        await deleteTrainTicket(trainTicketId!)
         //navigate('/clients');
-        dispatch(setSuccessMessage(`Hotel eliminado correctamente`))
+        dispatch(setSuccessMessage(`Pasaje de Tren eliminado correctamente`))
       } catch (error) {
         if (error instanceof BackendError) {
           dispatch(setErrorMessage(error.getMessage()))
@@ -74,62 +74,62 @@ const Table: FunctionComponent<Prop> = ({
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Ubicación',
-            fieldName: 'serviceLocation',
-            cellAlignment: 'left'
-          },
-          {
             columnLabel: 'Precio',
             fieldName: 'servicePrice',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Nro. de noches',
-            fieldName: 'numberOfNights',
+            columnLabel: 'Origen',
+            fieldName: 'serviceLocation',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Nro. de estrellas',
-            fieldName: 'numberOfStars',
+            columnLabel: 'Destino',
+            fieldName: 'arrivalLocation',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Nro. de estrellas',
-            fieldName: 'numberOfRooms',
+            columnLabel: 'Cabina',
+            fieldName: 'assignedCabinType',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Personas por habitación',
-            fieldName: 'allowedNumberOfPeoplePerRoom',
+            columnLabel: 'Aerolínea',
+            fieldName: 'airline',
             cellAlignment: 'left'
           },
           {
-            columnLabel: 'Fecha de entrada',
+            columnLabel: 'Tiene Parada?',
+            fieldName: 'hasStopOver',
+            cellAlignment: 'left'
+          },
+          {
+            columnLabel: 'Fecha de inicio',
             cellAlignment: 'left',
-            onRender: (row: HotelPerNight) =>
+            onRender: (row: TrainTicket) =>
               new Date(row.serviceTimestamp).toISOString().split('T')[0]
           },
           {
-            columnLabel: 'Fecha de salida',
+            columnLabel: 'Fecha de finalización',
             cellAlignment: 'left',
-            onRender: (row: HotelPerNight) =>
-              new Date(row.checkoutTimestamp).toISOString().split('T')[0]
+            onRender: (row: TrainTicket) =>
+              new Date(row.arrivalTimestamp).toISOString().split('T')[0]
           }
         ]}
         rows={items}
         components={[
-          (row: HotelPerNight) => (
+          (row: TrainTicket) => (
             <Button
               color='primary'
               onClick={() => {
-                navigate('/hotels-per-night/edit/' + row.id)
+                navigate('/train-tickets/edit/' + row.id)
               }}
               startIcon={<IconEdit />}
             >
               Editar
             </Button>
           ),
-          (row: HotelPerNight) => (
+          (row: TrainTicket) => (
             <Button
               color='secondary'
               onClick={() => handleOpen(row.id)}
@@ -143,7 +143,7 @@ const Table: FunctionComponent<Prop> = ({
       <DialogDelete
         handleClose={handleClose}
         onDelete={() => {
-          onDelete(hotelPerNightId)
+          onDelete(trainTicketId)
         }}
         open={open}
       />
@@ -165,7 +165,7 @@ const Table: FunctionComponent<Prop> = ({
 }
 
 interface Prop {
-  items: HotelPerNight[]
+  items: TrainTicket[]
   paginate: PaginateData
   className?: string
   onChange: (page: number) => void

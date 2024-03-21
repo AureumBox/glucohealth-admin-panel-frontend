@@ -1,0 +1,32 @@
+import axios from "axios";
+// Own
+import { API_BASE_URL } from "config/constants";
+import BackendError from "exceptions/backend-error";
+import store from "store";
+import { BusTicket } from "types/bus-ticket";
+import { BackendResponse } from "services/types";
+
+const URL = `${API_BASE_URL}/services/bus-tickets`;
+
+export default async function editBusTicket(
+  id: string,
+  body: BusTicketPayload
+): Promise<BusTicket> {
+  try {
+    const response = await axios.patch<BackendResponse<BusTicket>>(
+      `${URL}/${id}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${store.getState().auth.token}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw new BackendError(error);
+  }
+}
+
+export type BusTicketPayload = Omit<BusTicket, "id">;

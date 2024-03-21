@@ -13,7 +13,7 @@ const initialState: AuthState = hasStorageData()
   }
   : {
     token: null,
-    isAuth: true,
+    isAuth: false,
   };
 
 console.log("initial,state", hasStorageData(), initialState);

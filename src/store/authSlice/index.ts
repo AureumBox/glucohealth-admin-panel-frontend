@@ -8,13 +8,13 @@ import { clearStorageData } from "./clearStorageData";
 
 const initialState: AuthState = hasStorageData()
   ? {
-    ...getStorageData(),
-    isAuth: false,
-  }
+      ...getStorageData(),
+      isAuth: true,
+    }
   : {
-    token: null,
-    isAuth: false,
-  };
+      token: null,
+      isAuth: false,
+    };
 
 console.log("initial,state", hasStorageData(), initialState);
 

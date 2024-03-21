@@ -75,7 +75,7 @@ const FirebaseLogin = ({ ...others }) => {
             dispatch(authUser({ ...user, remember: rememberCheck }));
             setErrors({ submit: null });
             setSubmitting(true);
-            navigate('/dashboard/default');
+            navigate('/dashboard');
           } catch (error) {
             setErrors({ submit: error.getMessage() });
             setStatus({ success: false });

@@ -1,34 +1,77 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid } from "@mui/material";
 
 // project imports
-import EarningCard from './EarningCard';
-import PopularCard from './PopularCard';
-import TotalOrderLineChartCard from './TotalOrderLineChartCard';
-import TotalIncomeDarkCard from './TotalIncomeDarkCard';
-import TotalIncomeLightCard from './TotalIncomeLightCard';
-import TotalGrowthBarChart from './TotalGrowthBarChart';
-import { gridSpacing } from 'store/constant';
+import EarningCard from "./EarningCard";
+import PopularCard from "./PopularCard";
+import TotalOrderLineChartCard from "./TotalOrderLineChartCard";
+import TotalIncomeDarkCard from "./TotalIncomeDarkCard";
+import TotalIncomeLightCard from "./TotalIncomeLightCard";
+import TotalGrowthBarChart from "./TotalGrowthBarChart";
+import { gridSpacing } from "store/constant";
+import getIntervalProfits from "services/profits/get-interval-profits";
+import getCurrentMonthProfits from "services/profits/get-current-month-profits";
+import getTodayProfits from "services/profits/get-today-profits";
+
+const INITIAL_DATE = new Date("2000-01-01");
+const FINAL_DATE = new Date("2099-01-01");
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    setLoading(false);
+
+  const [totalProfits, setTotalProfits] = useState(0);
+  const [currentMonthProfits, setCurrentMonthProfits] = useState(0);
+  const [todayProfits, setTodayProfits] = useState(0);
+
+  const fetchProfits = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      const [totalProfits, currentMonthProfits, todayProfits] =
+        await Promise.all([
+          getIntervalProfits(INITIAL_DATE, FINAL_DATE),
+          getCurrentMonthProfits(),
+          getTodayProfits(),
+        ]);
+
+      setTotalProfits(totalProfits);
+      setCurrentMonthProfits(currentMonthProfits);
+      setTodayProfits(todayProfits);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchProfits();
+  }, [fetchProfits]);
 
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
-            <EarningCard isLoading={isLoading} />
+            <EarningCard
+              isLoading={isLoading}
+              label="Ganancias totales"
+              amount={totalProfits}
+            />
           </Grid>
           <Grid item lg={4} md={6} sm={6} xs={12}>
-            <TotalOrderLineChartCard isLoading={isLoading} />
+            <TotalOrderLineChartCard
+              isLoading={isLoading}
+              cardLabel="Ganancias"
+              firstLabel="Hoy"
+              firstAmount={todayProfits}
+              secondLabel="Mes"
+              secondAmount={currentMonthProfits}
+            />
           </Grid>
           <Grid item lg={4} md={12} sm={12} xs={12}>
             <Grid container spacing={gridSpacing}>

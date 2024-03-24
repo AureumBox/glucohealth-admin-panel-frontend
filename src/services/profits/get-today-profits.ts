@@ -8,16 +8,13 @@ import { Profits, ProfitsDto } from "types/profits";
 
 const URL = `${API_BASE_URL}/profits/today`;
 
-export default async function getTodayProfits(id: string): Promise<Profits> {
+export default async function getTodayProfits(): Promise<Profits> {
   try {
-    const response = await axios.get<BackendResponse<ProfitsDto>>(
-      `${URL}/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${store.getState().auth.token}`,
-        },
-      }
-    );
+    const response = await axios.get<BackendResponse<ProfitsDto>>(URL, {
+      headers: {
+        Authorization: `Bearer ${store.getState().auth.token}`,
+      },
+    });
     return response.data.data.profits;
   } catch (error: unknown) {
     console.log(error);

@@ -135,7 +135,7 @@ const Table: FunctionComponent<Prop> = ({
           ),
           (row: Employee) => (
             <Button
-              color="secondary"
+              color="error"
               onClick={() => handleOpen(row.id)}
               startIcon={<IconTrash />}
             >

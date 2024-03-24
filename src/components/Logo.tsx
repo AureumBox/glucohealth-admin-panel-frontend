@@ -12,7 +12,7 @@ import { FunctionComponent } from "react";
 
 const Logo: FunctionComponent = () => {
   return (
-    <img src="logo.png" alt="Nomade" width="120" />
+    <img src="/logo.png" alt="Nomade" width="120" />
 
     /**
      * if you want to use image instead of svg uncomment following, and comment out <svg> element.

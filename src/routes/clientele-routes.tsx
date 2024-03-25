@@ -1,25 +1,31 @@
-// project imports
-import { RouteObject } from "react-router";
+import { RouteObject } from 'react-router'
 
 //customers
-import Customers from "views/customers";
-import CreateCustomer from "views/customers/create";
-import EditCustomer from "views/customers/edit";
+import Customers from 'views/customers'
+import CreateCustomer from 'views/customers/create'
+import EditCustomer from 'views/customers/edit'
+//orders
+import Orders from 'views/orders'
 
 const ClienteleRoutes: RouteObject[] = [
-  // Estados
+  //customers
   {
-    path: "customers",
-    element: <Customers />,
+    path: 'customers',
+    element: <Customers />
   },
   {
-    path: "customers/create",
-    element: <CreateCustomer />,
+    path: 'customers/create',
+    element: <CreateCustomer />
   },
   {
-    path: "customers/edit/:id",
-    element: <EditCustomer />,
+    path: 'customers/edit/:id',
+    element: <EditCustomer />
   },
-];
+  //orders
+  {
+    path: 'orders',
+    element: <Orders />
+  }
+]
 
-export default ClienteleRoutes;
+export default ClienteleRoutes

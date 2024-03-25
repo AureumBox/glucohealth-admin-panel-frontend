@@ -91,7 +91,7 @@ const services: MenuItem = {
               id: "list-airline-tickets",
               title: "Lista de aviones",
               type: MenuItemType.Item,
-              url: "/airline-ticket",
+              url: "/airline-tickets",
               breadcrumbs: false,
             },
             {

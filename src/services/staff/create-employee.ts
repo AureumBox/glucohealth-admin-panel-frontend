@@ -21,7 +21,7 @@ export default async function createEmployee(
 
     await Promise.all(
       body.occupations.map((occupation) => {
-        console.log(occupation)
+        console.log(occupation);
         return createEmployeeOccupation(response.data.data.id, occupation);
       })
     );
@@ -33,4 +33,6 @@ export default async function createEmployee(
   }
 }
 
-export type EmployeePayload = Omit<Employee, "id">;
+export interface EmployeePayload extends Omit<Employee, "id"> {
+  password: string;
+}

@@ -98,6 +98,7 @@ const EditEmployee: FunctionComponent<Props> = ({ className }) => {
           isUpdate={true}
           initialValues={{
             ...employee,
+            password: "",
             occupations: employee.occupations.map((o) => o.occupationName),
             submit: null,
           }}

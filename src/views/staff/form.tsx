@@ -219,6 +219,19 @@ const Form: FunctionComponent<Props> = ({
                   name="salary"
                 />
               </FormControl>
+              <FormControl className="field-form" fullWidth>
+                <TextField
+                  id="password"
+                  label="Contraseña"
+                  variant="outlined"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.password}
+                  helperText={touched.password ? errors.password : ""}
+                  error={touched.password && !!errors.password}
+                  name="password"
+                />
+              </FormControl>
             </MainCard>
             <MainCard className={"form-data flex-column"}>
               {errors.submit && (
@@ -244,6 +257,7 @@ interface Props {
 }
 
 export type FormValues = Omit<Employee, "occupations"> & {
+  password: string;
   occupations: OccupationsEnum[];
   submit: string | null;
 };

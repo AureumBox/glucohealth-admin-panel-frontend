@@ -45,6 +45,7 @@ const CreateEmployee: FunctionComponent<Props> = ({ className }) => {
           citizenship: values.citizenship,
           phoneNumber: values.phoneNumber,
           salary: values.salary,
+          password: values.password,
           occupations: values.occupations.map((o) => ({
             occupationName: o,
           })),
@@ -93,6 +94,7 @@ const CreateEmployee: FunctionComponent<Props> = ({ className }) => {
           phoneNumber: "",
           salary: 0,
           occupations: [],
+          password: "",
           submit: null,
         }}
         title={"Crear empleado"}

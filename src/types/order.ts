@@ -11,6 +11,7 @@ export interface Order {
   customerId: string;
   salespersonId: string;
   placementTimestamp: Date;
+  isCompletelyPaid: boolean;
 }
 
 export interface OrderedPackage {

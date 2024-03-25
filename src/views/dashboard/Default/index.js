@@ -18,14 +18,22 @@ import getTodayProfits from "services/profits/get-today-profits";
 const INITIAL_DATE = new Date("2000-01-01");
 const FINAL_DATE = new Date("2099-01-01");
 
+const INITIAL_PROFITS_DATA_STATE = {
+  profits: 0,
+  numberOfPaidOrders: 0,
+  bestSellingServices: [],
+};
+
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
 
-  const [totalProfits, setTotalProfits] = useState(0);
-  const [currentMonthProfits, setCurrentMonthProfits] = useState(0);
-  const [todayProfits, setTodayProfits] = useState(0);
+  const [totalProfits, setTotalProfits] = useState(INITIAL_PROFITS_DATA_STATE);
+  const [currentMonthProfits, setCurrentMonthProfits] = useState(
+    INITIAL_PROFITS_DATA_STATE
+  );
+  const [todayProfits, setTodayProfits] = useState(INITIAL_PROFITS_DATA_STATE);
 
   const fetchProfits = useCallback(async () => {
     try {
@@ -60,7 +68,7 @@ const Dashboard = () => {
             <EarningCard
               isLoading={isLoading}
               label="Ganancias totales"
-              amount={totalProfits}
+              amount={totalProfits.profits}
             />
           </Grid>
           <Grid item lg={4} md={6} sm={6} xs={12}>
@@ -70,31 +78,42 @@ const Dashboard = () => {
               firstLabel="Hoy"
               firstAmount={todayProfits}
               secondLabel="Mes"
-              secondAmount={currentMonthProfits}
+              secondAmount={currentMonthProfits.profits}
             />
           </Grid>
-          {/* <Grid item lg={4} md={12} sm={12} xs={12}>
+          <Grid item lg={4} md={12} sm={12} xs={12}>
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeDarkCard isLoading={isLoading} />
+                <TotalIncomeDarkCard
+                  isLoading={isLoading}
+                  label="Cantidad de órdenes de hoy"
+                  amount={todayProfits.numberOfPaidOrders}
+                />
               </Grid>
               <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeLightCard isLoading={isLoading} />
+                <TotalIncomeLightCard
+                  isLoading={isLoading}
+                  label="Cantidad de órdenes de este mes"
+                  amount={currentMonthProfits.numberOfPaidOrders}
+                />
               </Grid>
             </Grid>
-          </Grid> */}
+          </Grid>
         </Grid>
       </Grid>
-      {/* <Grid item xs={12}>
+      <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
-          <Grid item xs={12} md={8}>
+          {/* <Grid item xs={12} md={8}>
             <TotalGrowthBarChart isLoading={isLoading} />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={4}>
-            <PopularCard isLoading={isLoading} />
+            <PopularCard
+              isLoading={isLoading}
+              services={totalProfits.bestSellingServices}
+            />
           </Grid>
         </Grid>
-      </Grid> */}
+      </Grid>
     </Grid>
   );
 };

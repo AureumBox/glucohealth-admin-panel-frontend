@@ -4,18 +4,18 @@ import { API_BASE_URL } from "config/constants";
 import BackendError from "exceptions/backend-error";
 import { BackendResponse } from "services/types";
 import store from "store";
-import { Profits, ProfitsDto } from "types/profits";
+import { ProfitsData } from "types/profits";
 
 const URL = `${API_BASE_URL}/profits/today`;
 
-export default async function getTodayProfits(): Promise<Profits> {
+export default async function getTodayProfits(): Promise<ProfitsData> {
   try {
-    const response = await axios.get<BackendResponse<ProfitsDto>>(URL, {
+    const response = await axios.get<BackendResponse<ProfitsData>>(URL, {
       headers: {
         Authorization: `Bearer ${store.getState().auth.token}`,
       },
     });
-    return response.data.data.profits;
+    return response.data.data;
   } catch (error: unknown) {
     console.log(error);
     throw new BackendError(error);

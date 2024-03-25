@@ -5,16 +5,16 @@ import BackendError from "exceptions/backend-error";
 import addQueryParams from "services/add-query-params";
 import { BackendResponse } from "services/types";
 import store from "store";
-import { Profits, ProfitsDto } from "types/profits";
+import { ProfitsData } from "types/profits";
 
 const URL = `${API_BASE_URL}/profits`;
 
 export default async function getIntervalProfits(
   from: Date,
   to: Date
-): Promise<Profits> {
+): Promise<ProfitsData> {
   try {
-    const response = await axios.get<BackendResponse<ProfitsDto>>(
+    const response = await axios.get<BackendResponse<ProfitsData>>(
       addQueryParams(URL, { from: from.toISOString(), to: to.toISOString() }),
       {
         headers: {
@@ -22,7 +22,7 @@ export default async function getIntervalProfits(
         },
       }
     );
-    return response.data.data.profits;
+    return response.data.data;
   } catch (error: unknown) {
     console.log(error);
     throw new BackendError(error);

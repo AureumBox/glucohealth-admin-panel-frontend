@@ -1,5 +1,7 @@
-export type Profits = number;
+import { Service } from "./service";
 
-export interface ProfitsDto {
-  profits: Profits;
+export interface ProfitsData {
+  profits: number;
+  numberOfPaidOrders: number;
+  bestSellingServices: Service[];
 }

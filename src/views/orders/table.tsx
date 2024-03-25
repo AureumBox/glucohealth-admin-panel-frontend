@@ -102,9 +102,12 @@ const Table: FunctionComponent<Prop> = ({
             onRender: (row: Order) => `$${row.price.toFixed(2)}`,
           },
           {
-            columnLabel: "Pagos",
-            fieldName: "payments",
-            cellAlignment: "left",
+            columnLabel: "Pagada",
+            onRender: (row: Order) => (
+              <div style={{ textAlign: "center" }}>
+                {row.isCompletelyPaid ? "✅" : "❌"}
+              </div>
+            ),
           },
           {
             columnLabel: "ID del cliente",

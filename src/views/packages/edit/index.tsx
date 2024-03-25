@@ -39,7 +39,7 @@ const EditPackage: FunctionComponent<Props> = ({ className }) => {
           description: values.description,
           appliedDiscountPercentage: values.appliedDiscountPercentage,
           containedServices: values.containedServices.map((csId) => ({
-            serviceId: csId,
+            service: { id: csId },
             amountContained: values.servicesQuantities[csId] ?? 1,
           })),
         };
@@ -79,12 +79,12 @@ const EditPackage: FunctionComponent<Props> = ({ className }) => {
             ...{
               ...fetchedPackage,
               containedServices: fetchedPackage.containedServices.map(
-                (cs) => cs.serviceId
+                (cs) => cs.service.id
               ),
             },
             servicesQuantities: fetchedPackage.containedServices.reduce(
               (p: Record<string, number>, c) => {
-                p[c.serviceId] = c.amountContained;
+                p[c.service.id] = c.amountContained;
                 return p;
               },
               {}

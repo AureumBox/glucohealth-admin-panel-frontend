@@ -1,4 +1,6 @@
+import { PackageSnapshot } from "./package";
 import { Payment } from "./payment";
+import { ServiceSnapshot } from "./service";
 
 export interface Order {
   id: string;
@@ -13,12 +15,12 @@ export interface Order {
 
 export interface OrderedPackage {
   packageId: string;
-  packageSnapshotId: string;
+  packageSnapshot: PackageSnapshot;
   amountOrdered: number;
 }
 
 export interface OrderedService {
   serviceId: string;
-  serviceSnapshotId: string;
+  serviceSnapshot: ServiceSnapshot;
   amountOrdered: number;
 }

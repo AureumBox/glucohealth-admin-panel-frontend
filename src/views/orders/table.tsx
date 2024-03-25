@@ -59,14 +59,67 @@ const Table: FunctionComponent<Prop> = ({
     [dispatch, fetchItems, handleClose]
   );
 
+  /* export interface Order {
+    id: string;
+    orderedPackages: OrderedPackage[];
+    orderedServices: OrderedService[];
+    price: number;
+    payments: Payment[];
+    customerId: string;
+    salespersonId: string;
+    placementTimestamp: Date;
+  } */
+
   return (
     <div className={className}>
       <DynamicTable
         headers={[
           {
-            columnLabel: "DNI",
-            fieldName: "dni",
+            columnLabel: "ID",
+            fieldName: "id",
             cellAlignment: "left",
+          },
+          {
+            columnLabel: "Paquetes ordenados",
+            cellAlignment: "left",
+            onRender: (row: Order) =>
+              row.orderedPackages
+                .map((op) => `${op.packageSnapshot.name} (${op.amountOrdered})`)
+                .join(", "),
+          },
+          {
+            columnLabel: "Servicios ordenados",
+            onRender: (row: Order) =>
+              row.orderedServices
+                .map(
+                  (op) =>
+                    `${op.serviceSnapshot.serviceName} (${op.amountOrdered})`
+                )
+                .join(", "),
+          },
+          {
+            columnLabel: "Precio",
+            onRender: (row: Order) => `$${row.price.toFixed(2)}`,
+          },
+          {
+            columnLabel: "Pagos",
+            fieldName: "payments",
+            cellAlignment: "left",
+          },
+          {
+            columnLabel: "ID del cliente",
+            fieldName: "customerId",
+            cellAlignment: "left",
+          },
+          {
+            columnLabel: "ID del vendedor",
+            fieldName: "salespersonId",
+            cellAlignment: "left",
+          },
+          {
+            columnLabel: "Fecha de colocación",
+            onRender: (row: Order) =>
+              new Date(row.placementTimestamp).toISOString().split("T")[0],
           },
         ]}
         rows={items}

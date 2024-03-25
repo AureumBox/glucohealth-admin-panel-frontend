@@ -16,3 +16,7 @@ export interface Service {
   serviceTimestamp: Date;
   serviceType: ServiceType;
 }
+
+export interface ServiceSnapshot extends Service {
+  snapshotTimestamp: Date;
+}

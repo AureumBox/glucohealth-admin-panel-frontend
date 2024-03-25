@@ -94,7 +94,7 @@ const Table: FunctionComponent<Prop> = ({
             cellAlignment: "left",
           },
           {
-            columnLabel: "Nro. de estrellas",
+            columnLabel: "Nro. de habitaciones",
             fieldName: "numberOfRooms",
             cellAlignment: "left",
           },

@@ -24,7 +24,6 @@ const Form: FunctionComponent<Props> = ({
   title,
   onSubmit,
   initialValues,
-  isUpdate,
 }) => {
   const services = useServicesOptions();
 
@@ -44,25 +43,20 @@ const Form: FunctionComponent<Props> = ({
           containedServices: Yup.array().required(
             "Los servicios son requeridos"
           ),
-          price: Yup.number()
-            .required("El precio es requerido")
-            .min(0, "El precio no puede ser menor a 0"),
         })}
-        onSubmit={onSubmit as any}
+        onSubmit={onSubmit}
       >
         {({
           errors,
           handleBlur,
           handleChange,
           handleSubmit,
-          isSubmitting,
           setFieldValue,
           touched,
           values,
         }) => (
-          <form noValidate onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <MainCard className={"form-data"} title={title}>
-              <code>{JSON.stringify(values)}</code>
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="name"
@@ -136,7 +130,7 @@ const Form: FunctionComponent<Props> = ({
                 </Select>
                 <List>
                   {values.containedServices.map((cs) => (
-                    <ListItem className="flex gap-2 justify-center">
+                    <ListItem key={cs} className="flex gap-2 justify-center">
                       <ListItemText className="font-bold">
                         {services.find((opt) => opt.value === cs)?.label}
                       </ListItemText>

@@ -36,7 +36,7 @@ const CreatePackage: FunctionComponent<Props> = ({ className }) => {
           description: values.description,
           appliedDiscountPercentage: values.appliedDiscountPercentage,
           containedServices: values.containedServices.map((csId) => ({
-            serviceId: csId,
+            service: { id: csId },
             amountContained: values.servicesQuantities[csId] ?? 1,
           })),
         };

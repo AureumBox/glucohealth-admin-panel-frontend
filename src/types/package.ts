@@ -8,6 +8,12 @@ export interface Package {
 }
 
 export interface ContainedService {
-  serviceId: string;
+  service: {
+    id: string;
+  };
   amountContained: number;
+}
+
+export interface PackageSnapshot extends Package {
+  snapshotTimestamp: Date;
 }

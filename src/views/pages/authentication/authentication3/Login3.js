@@ -65,7 +65,7 @@ const Login = () => {
                             gutterBottom
                             variant={matchDownSM ? "h3" : "h2"}
                           >
-                            Hola, Bienvenido de vuelta 👋!
+                            Hola, bienvenido de vuelta 👋!
                           </Typography>
                           <Typography
                             variant="caption"

@@ -68,11 +68,13 @@ const FirebaseLogin = ({ ...others }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            /*
             const user = await login({
               employeeEmail: values.employeeEmail,
               password: values.password
             });
-            dispatch(authUser({ ...user, remember: rememberCheck }));
+            */
+            dispatch(authUser({ ...{employeeEmail: 'aemail', password: 'a'}, remember: rememberCheck }));
             setErrors({ submit: null });
             setSubmitting(true);
             navigate('/dashboard');

@@ -7,8 +7,7 @@ import { RouteObject } from "react-router";
 
 // pages
 import Logout from "views/logout";
-import ClienteleRoutes from "./clientele-routes";
-import ServicesRoutes from "./services-routes";
+import HospitalRoutes from "./hospital-routes";
 
 // dashboard routing
 const DashboardDefault = Loadable(
@@ -29,8 +28,7 @@ const MainRoutes: RouteObject = {
       path: "dashboard",
       element: <DashboardDefault />,
     },
-    ...ClienteleRoutes,
-    ...ServicesRoutes,
+    ...HospitalRoutes,
     {
       path: "logout",
       element: <Logout />,

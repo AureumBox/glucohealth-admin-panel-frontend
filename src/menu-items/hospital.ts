@@ -29,6 +29,29 @@ const other: MenuItem = {
         },
       ],
     },
+    {
+      id: "patients",
+      title: "Pacientes",
+      type: MenuItemType.Collapse,
+      icon: IconUsers,
+      breadcrumbs: false,
+      children: [
+        {
+          id: "list-patients",
+          title: "Lista de pacientes",
+          type: MenuItemType.Item,
+          url: "/patients",
+          breadcrumbs: false,
+        },
+        {
+          id: "create-patient",
+          title: "Crear paciente",
+          type: MenuItemType.Item,
+          url: "/patients/create",
+          breadcrumbs: false,
+        },
+      ],
+    },
   ],
 };
 

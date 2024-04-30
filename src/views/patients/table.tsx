@@ -94,12 +94,12 @@ const Table: FunctionComponent<Prop> = ({
             cellAlignment: "left",
           },
           {
-            columnLabel: "Peso en kg",
+            columnLabel: "Peso (kg)",
             fieldName: "weightInKg",
             cellAlignment: "left",
           },
           {
-            columnLabel: "Altura en cm",
+            columnLabel: "Altura (cm)",
             fieldName: "heightInCm",
             cellAlignment: "left",
           },

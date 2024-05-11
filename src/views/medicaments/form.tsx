@@ -3,12 +3,7 @@ import * as Yup from "yup";
 import { ErrorMessage, Field, FieldArray, Formik, FormikHelpers } from "formik";
 // material-ui
 import MainCard from "components/cards/MainCard";
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  TextField,
-} from "@mui/material";
+import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import styled from "styled-components";
 import { Medicament } from "types/medicament";
 import { IconCirclePlus, IconTrash } from "@tabler/icons";
@@ -20,7 +15,6 @@ const Form: FunctionComponent<Props> = ({
   initialValues,
   isUpdate,
 }) => {
-
   return (
     <div className={className}>
       <Formik<FormValues>
@@ -28,6 +22,19 @@ const Form: FunctionComponent<Props> = ({
         validateOnBlur={false}
         validateOnMount={false}
         initialValues={initialValues}
+        validationSchema={Yup.object().shape({
+          tradeName: Yup.string().nullable(),
+          genericName: Yup.string().required(
+            "El nombre genérico es requerido."
+          ),
+          description: Yup.string().required("La descripción es requerida."),
+          sideEffects: Yup.array()
+            .of(Yup.string())
+            .min(1, "Al menos un efecto secundario es requerido."),
+          presentations: Yup.array()
+            .of(Yup.string())
+            .min(1, "Al menos una presentación es requerida."),
+        })}
         onSubmit={onSubmit as any}
       >
         {({
@@ -41,6 +48,9 @@ const Form: FunctionComponent<Props> = ({
         }) => (
           <form noValidate onSubmit={handleSubmit}>
             <MainCard className={"form-data"} title={title}>
+              <FormHelperText>
+                Los campos marcados con (*) son obligatorios.{" "}
+              </FormHelperText>
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="tradeName"
@@ -57,7 +67,7 @@ const Form: FunctionComponent<Props> = ({
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="genericName"
-                  label="Nombre Genérico"
+                  label="Nombre Genérico *"
                   variant="outlined"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -70,7 +80,7 @@ const Form: FunctionComponent<Props> = ({
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="description"
-                  label="Descripción"
+                  label="Descripción *"
                   variant="outlined"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -81,7 +91,7 @@ const Form: FunctionComponent<Props> = ({
                 />
               </FormControl>
             </MainCard>
-            <MainCard className={"form-data"} title={"Efectos secundarios"}>
+            <MainCard className={"form-data"} title={"Efectos secundarios *"}>
               <FieldArray
                 name="sideEffects"
                 render={(arrayHelpers) => (
@@ -124,8 +134,16 @@ const Form: FunctionComponent<Props> = ({
                   </>
                 )}
               />
+              <FormControl
+                className="field-form2"
+                error={!!touched.sideEffects && !!errors.sideEffects}
+              >
+                {!!touched.sideEffects && !!errors.sideEffects && (
+                  <FormHelperText error>{errors.sideEffects}</FormHelperText>
+                )}
+              </FormControl>
             </MainCard>
-            <MainCard className={"form-data"} title={"Presentaciones"}>
+            <MainCard className={"form-data"} title={"Presentaciones *"}>
               <FieldArray
                 name="presentations"
                 render={(arrayHelpers) => (
@@ -168,6 +186,14 @@ const Form: FunctionComponent<Props> = ({
                   </>
                 )}
               />
+              <FormControl
+                className="field-form2"
+                error={!!touched.presentations && !!errors.presentations}
+              >
+                {!!touched.presentations && !!errors.presentations && (
+                  <FormHelperText error>{errors.presentations}</FormHelperText>
+                )}
+              </FormControl>
             </MainCard>
             <MainCard className={"form-data flex-column"}>
               {errors.submit && (

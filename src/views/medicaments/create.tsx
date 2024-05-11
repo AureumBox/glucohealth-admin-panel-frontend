@@ -75,7 +75,7 @@ const CreateMedicament: FunctionComponent<Props> = ({ className }) => {
       <Form
         initialValues={{
           id: "",
-          tradeName: "",
+          tradeName: null,
           genericName: "",
           description: "",
           sideEffects: [],

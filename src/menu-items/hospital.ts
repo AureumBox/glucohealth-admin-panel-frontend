@@ -52,6 +52,29 @@ const other: MenuItem = {
         },
       ],
     },
+    {
+      id: "medicaments",
+      title: "Medicamentos",
+      type: MenuItemType.Collapse,
+      icon: IconUsers,
+      breadcrumbs: false,
+      children: [
+        {
+          id: "list-medicaments",
+          title: "Lista de medicamentos",
+          type: MenuItemType.Item,
+          url: "/medicaments",
+          breadcrumbs: false,
+        },
+        {
+          id: "create-medicament",
+          title: "Crear medicamento",
+          type: MenuItemType.Item,
+          url: "/medicaments/create",
+          breadcrumbs: false,
+        },
+      ],
+    },
   ],
 };
 

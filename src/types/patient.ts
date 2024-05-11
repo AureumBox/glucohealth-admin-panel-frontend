@@ -4,7 +4,7 @@ export interface Patient {
   email: string;
   phoneNumber: string;
   nationalId: string;
-  age: number | null;
+  birthDate: number | null;
   weightInKg: number | null;
   heightInCm: number | null;
 }

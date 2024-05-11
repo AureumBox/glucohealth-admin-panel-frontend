@@ -3,28 +3,31 @@ import { FunctionComponent, useCallback } from "react";
 import MainCard from "components/cards/MainCard";
 import { Typography } from "@mui/material";
 import styled from "styled-components";
-import BackendError from "exceptions/backend-error";
 import { useNavigate } from "react-router";
+//own
+import BackendError from "exceptions/backend-error";
+import { useAppDispatch } from "../../../store/index";
 import {
-  setErrorMessage,
   setIsLoading,
   setSuccessMessage,
+  setErrorMessage,
 } from "store/customizationSlice";
-import { useAppDispatch } from "../../store/index";
-import Form, { FormValues } from "./form";
+import Form, { FormValues } from "../form";
+import useMedicamentById from "./use-medicament-by-dni";
+import useMedicamentId from "./use-medicament-by-id";
 import { FormikHelpers } from "formik";
-import createPatient, {
-  PatientPayload,
-} from "services/patients/create-patient";
+import editMedicament, { MedicamentPayload } from "services/medicaments/edit-medicament";
 
-const CreatePatient: FunctionComponent<Props> = ({ className }) => {
+const EditMedicament: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const medicamentId = useMedicamentId();
+  const medicament = useMedicamentById(medicamentId);
 
   const onSubmit = useCallback(
     async (
-      values: PatientPayload & {
-        submit: string | null;
+      values: MedicamentPayload & {
+        submit: null | string;
       },
       { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
     ) => {
@@ -33,20 +36,12 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
         setErrors({});
         setStatus({});
         setSubmitting(true);
-        const payload: PatientPayload = {
-          fullName: values.fullName,
-          email: values.email,
-          phoneNumber: values.phoneNumber,
-          nationalId: values.nationalId,
-          birthDate: values.birthDate,
-          weightInKg: values.weightInKg,
-          heightInCm: values.heightInCm,
-        };
-        console.log(payload);
-        await createPatient(payload);
-        navigate("/patients");
+        await editMedicament(medicamentId!, values);
+        navigate("/medicaments");
         dispatch(
-          setSuccessMessage(`Paciente ${values.fullName} creado correctamente`)
+          setSuccessMessage(
+            `Enfermero ${values.tradeName ? values.tradeName : values.genericName} editado correctamente`
+          )
         );
       } catch (error) {
         if (error instanceof BackendError) {
@@ -62,32 +57,27 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
         setSubmitting(false);
       }
     },
-    [dispatch, navigate]
+    [medicamentId, navigate, dispatch, medicament]
   );
 
   return (
     <div className={className}>
       <MainCard>
         <Typography variant="h3" component="h3">
-          Pacientes
+          Enfermeros
         </Typography>
       </MainCard>
-
-      <Form
-        initialValues={{
-          id: "",
-          fullName: "",
-          email: "",
-          phoneNumber: "",
-          nationalId: "",
-          birthDate: null,
-          weightInKg: null,
-          heightInCm: null,
-          submit: null,
-        }}
-        title={"Crear paciente"}
-        onSubmit={onSubmit}
-      />
+      {medicament && (
+        <Form
+          isUpdate={true}
+          initialValues={{
+            ...medicament,
+            submit: null,
+          }}
+          title={"Editar enfermero"}
+          onSubmit={onSubmit}
+        />
+      )}
     </div>
   );
 };
@@ -96,7 +86,7 @@ interface Props {
   className?: string;
 }
 
-export default styled(CreatePatient)`
+export default styled(EditMedicament)`
   display: flex;
   flex-direction: column;
 

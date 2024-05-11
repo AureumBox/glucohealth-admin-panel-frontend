@@ -45,7 +45,7 @@ const Form: FunctionComponent<Props> = ({
             "El número telefónico es requerido."
           ),
           nationalId: Yup.string().required("El NUI es requerido."),
-          age: Yup.string().nullable(),
+          birthDate: Yup.string().nullable(),
           heightInCm: Yup.string().nullable(),
           weightInKg: Yup.string().nullable(),
         })}
@@ -62,7 +62,9 @@ const Form: FunctionComponent<Props> = ({
         }) => (
           <form noValidate onSubmit={handleSubmit}>
             <MainCard className={"form-data"} title={title}>
-              <FormHelperText>Los campos marcados con (*) son obligatorios. </FormHelperText>
+              <FormHelperText>
+                Los campos marcados con (*) son obligatorios.{" "}
+              </FormHelperText>
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="fullName"
@@ -116,16 +118,20 @@ const Form: FunctionComponent<Props> = ({
                 />
               </FormControl>
               <FormControl className="field-form" fullWidth>
-                <TextField
-                  id="age"
-                  label="Edad"
-                  variant="outlined"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.age}
-                  helperText={touched.age ? errors.age : ""}
-                  error={touched.age && !!errors.age}
-                  name="age"
+                <DatePicker
+                  label="Fecha de nacimiento"
+                  value={dayjs(values.birthDate)}
+                  onChange={(newValue: any) => {
+                    const newValueFormatted = newValue?.format("DD-MM-YYYY") || null;
+                    handleChange({
+                      target: {
+                        name: "birthDate",
+                        id: "birthDate",
+                        value: newValueFormatted || null,
+                      },
+                    });
+                    console.log(newValueFormatted)
+                  }}
                 />
               </FormControl>
               <FormControl className="field-form" fullWidth>

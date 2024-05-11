@@ -13,40 +13,39 @@ import {
 import { useAppDispatch } from "../../store/index";
 import Form, { FormValues } from "./form";
 import { FormikHelpers } from "formik";
-import createPatient, {
-  PatientPayload,
-} from "services/patients/create-patient";
+import createMedicament, {
+  MedicamentPayload,
+} from "services/medicaments/create-medicament";
 
-const CreatePatient: FunctionComponent<Props> = ({ className }) => {
+const CreateMedicament: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const onSubmit = useCallback(
     async (
-      values: PatientPayload & {
+      values: MedicamentPayload & {
         submit: string | null;
       },
       { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
     ) => {
       try {
+        console.log('l')
         dispatch(setIsLoading(true));
         setErrors({});
         setStatus({});
         setSubmitting(true);
-        const payload: PatientPayload = {
-          fullName: values.fullName,
-          email: values.email,
-          phoneNumber: values.phoneNumber,
-          nationalId: values.nationalId,
-          birthDate: values.birthDate,
-          weightInKg: values.weightInKg,
-          heightInCm: values.heightInCm,
+        const payload: MedicamentPayload = {
+          tradeName: values.tradeName,
+          genericName: values.genericName,
+          description: values.description,
+          sideEffects: values.sideEffects,
+          presentations: values.presentations,
         };
         console.log(payload);
-        await createPatient(payload);
-        navigate("/patients");
+        await createMedicament(payload);
+        navigate("/medicaments");
         dispatch(
-          setSuccessMessage(`Paciente ${values.fullName} creado correctamente`)
+          setSuccessMessage(`Medicamento ${values.tradeName ? values.tradeName : values.genericName } creado correctamente`)
         );
       } catch (error) {
         if (error instanceof BackendError) {
@@ -69,23 +68,21 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
     <div className={className}>
       <MainCard>
         <Typography variant="h3" component="h3">
-          Pacientes
+          Enfermeros
         </Typography>
       </MainCard>
 
       <Form
         initialValues={{
           id: "",
-          fullName: "",
-          email: "",
-          phoneNumber: "",
-          nationalId: "",
-          birthDate: null,
-          weightInKg: null,
-          heightInCm: null,
+          tradeName: "",
+          genericName: "",
+          description: "",
+          sideEffects: [],
+          presentations: [],
           submit: null,
         }}
-        title={"Crear paciente"}
+        title={"Crear medicamento"}
         onSubmit={onSubmit}
       />
     </div>
@@ -96,7 +93,7 @@ interface Props {
   className?: string;
 }
 
-export default styled(CreatePatient)`
+export default styled(CreateMedicament)`
   display: flex;
   flex-direction: column;
 

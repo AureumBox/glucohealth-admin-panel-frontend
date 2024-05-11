@@ -7,17 +7,25 @@ import {
   Paper,
   Table,
   styled,
-} from '@mui/material';
-import { FunctionComponent, ReactNode } from 'react';
+} from "@mui/material";
+import { FunctionComponent, ReactNode } from "react";
 
-const DynamicTable: FunctionComponent<Props<any>> =({ headers, rows, settings, components, className, renderColumnClass, emptyState }) => {
+const DynamicTable: FunctionComponent<Props<any>> = ({
+  headers,
+  rows,
+  settings,
+  components,
+  className,
+  renderColumnClass,
+  emptyState,
+}) => {
   return (
     <TableContainer component={Paper} className={className}>
       <Table aria-label="dynamic table">
         <TableHead>
           <TableRow>
-            {headers.map(({columnLabel, cellAlignment}, index) => (
-              <TableCell align={cellAlignment || 'left'} key={columnLabel}>
+            {headers.map(({ columnLabel, cellAlignment }, index) => (
+              <TableCell align={cellAlignment || "left"} key={columnLabel}>
                 {columnLabel}
               </TableCell>
             ))}
@@ -25,48 +33,48 @@ const DynamicTable: FunctionComponent<Props<any>> =({ headers, rows, settings, c
           </TableRow>
         </TableHead>
         <TableBody>
-          {
-            rows.map((row, indexRow) => 
-            {
-                const rowClassName = renderColumnClass?.(row, indexRow) || '';
-                return (
-                  <TableRow
-                    className={rowClassName}
-                    key={`row-${indexRow}`}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    {headers.map(({ fieldName, cellAlignment, ...header }, index) => (
-                      <TableCell align={cellAlignment || 'left'} key={`${index}-${fieldName}`}>
-                        {fieldName && row[fieldName]}
-                        {header.onRender && header.onRender(row, indexRow)}
-                      </TableCell>
-                    ))}
-                    {
-                      components && (
-                        <TableCell align={settings?.cellAlignment || 'right'}>
-                          {
-                            components.map((renderComponent, index) => renderComponent(row, indexRow))
-                          }
-                        </TableCell>
-                      )
-                    }
-                  </TableRow>
-                );
-              }
-            )
-          }
+          {rows.map((row, indexRow) => {
+            const rowClassName = renderColumnClass?.(row, indexRow) || "";
+            return (
+              <TableRow
+                className={rowClassName}
+                key={`row-${indexRow}`}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                {headers.map(
+                  ({ fieldName, cellAlignment, ...header }, index) => (
+                    <TableCell
+                      align={cellAlignment || "left"}
+                      key={`${index}-${fieldName}`}
+                    >
+                      {fieldName &&
+                        (Array.isArray(row[fieldName])
+                          ? row[fieldName].join(", ")
+                          : row[fieldName])}
+                      {header.onRender && header.onRender(row, indexRow)}
+                    </TableCell>
+                  )
+                )}
+                {components && (
+                  <TableCell align={settings?.cellAlignment || "right"}>
+                    {components.map((renderComponent, index) =>
+                      renderComponent(row, indexRow)
+                    )}
+                  </TableCell>
+                )}
+              </TableRow>
+            );
+          })}
           <TableRow>
             <TableCell colSpan={headers.length + (components ? 1 : 0)}>
-              {
-                  emptyState && rows.length <= 0 ? (emptyState) : ''
-              }
+              {emptyState && rows.length <= 0 ? emptyState : ""}
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
+};
 
 type RowItem = Record<string, any>;
 type SettingComponent<T, R> = (rowItem: T, index: number) => R;
@@ -82,13 +90,13 @@ interface Props<T> {
 }
 
 export interface Settings {
-  cellAlignment?: 'left' | 'center' | 'right';
+  cellAlignment?: "left" | "center" | "right";
 }
 
 export interface Header<T> {
   columnLabel: string;
   fieldName?: string;
-  cellAlignment?: 'left' | 'center' | 'right';
+  cellAlignment?: "left" | "center" | "right";
   onRender?: SettingComponent<T, ReactNode | string>;
 }
 

@@ -15,7 +15,7 @@ export default async function editNurse(
 ): Promise<Nurse> {
   try {
     const urlWithId = addQueryParams(URL, { id });
-    const response = await axios.patch<BackendResponse<Nurse>>(
+    const response = await axios.put<BackendResponse<Nurse>>(
       urlWithId,
       body,
       {

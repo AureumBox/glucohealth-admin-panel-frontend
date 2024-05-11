@@ -64,7 +64,7 @@ const EditMedicament: FunctionComponent<Props> = ({ className }) => {
     <div className={className}>
       <MainCard>
         <Typography variant="h3" component="h3">
-          Enfermeros
+          Medicamentos
         </Typography>
       </MainCard>
       {medicament && (

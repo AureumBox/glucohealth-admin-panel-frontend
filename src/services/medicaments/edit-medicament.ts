@@ -14,6 +14,7 @@ export default async function editMedicament(
   body: MedicamentPayload
 ): Promise<Medicament> {
   try {
+    console.log(body)
     const urlWithId = addQueryParams(URL, { id });
     const response = await axios.put<BackendResponse<Medicament>>(
       urlWithId,

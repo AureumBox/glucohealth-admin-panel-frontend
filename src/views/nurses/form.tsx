@@ -14,10 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import styled from "styled-components";
-import { DatePicker } from "@mui/x-date-pickers";
-import dayjs from "dayjs";
 import { Nurse } from "types/nurse";
-import useOccupationsOptions from "core/occupations/use-occupations-options";
 
 const Form: FunctionComponent<Props> = ({
   className,
@@ -26,7 +23,6 @@ const Form: FunctionComponent<Props> = ({
   initialValues,
   isUpdate,
 }) => {
-  const occupations = useOccupationsOptions();
 
   return (
     <div className={className}>

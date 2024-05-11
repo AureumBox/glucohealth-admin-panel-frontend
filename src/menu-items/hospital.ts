@@ -1,4 +1,4 @@
-import { IconUsers } from "@tabler/icons";
+import { IconNurse, IconUsers, IconPill  } from "@tabler/icons";
 import { MenuItem, MenuItemType } from "./types";
 
 const other: MenuItem = {
@@ -10,7 +10,7 @@ const other: MenuItem = {
       id: "nurses",
       title: "Enfermeros",
       type: MenuItemType.Collapse,
-      icon: IconUsers,
+      icon: IconNurse,
       breadcrumbs: false,
       children: [
         {
@@ -56,7 +56,7 @@ const other: MenuItem = {
       id: "medicaments",
       title: "Medicamentos",
       type: MenuItemType.Collapse,
-      icon: IconUsers,
+      icon: IconPill,
       breadcrumbs: false,
       children: [
         {

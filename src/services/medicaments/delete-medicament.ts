@@ -9,6 +9,7 @@ const URL = `${API_BASE_URL}/medicaments`;
 
 export default async function deleteMedicament(id: string): Promise<void> {
   try {
+    console.log(id)
     const urlWithId = addQueryParams(URL, { id });
     await axios.delete(urlWithId, {
       headers: {

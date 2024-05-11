@@ -16,7 +16,6 @@ import { useNavigate } from "react-router";
 import deleteNurse from "services/nurses/delete-nurse";
 import DialogDelete from "components/dialogDelete";
 import { Nurse } from "types/nurse";
-import { occupationsWithLabel } from "core/occupations/use-occupations-options";
 
 const Table: FunctionComponent<Prop> = ({
   items,

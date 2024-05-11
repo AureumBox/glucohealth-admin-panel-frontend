@@ -71,16 +71,6 @@ const Dashboard = () => {
               amount={totalProfits.profits}
             />
           </Grid>
-          <Grid item lg={4} md={6} sm={6} xs={12}>
-            <TotalOrderLineChartCard
-              isLoading={isLoading}
-              cardLabel="Ganancias"
-              firstLabel="Hoy"
-              firstAmount={todayProfits}
-              secondLabel="Mes"
-              secondAmount={currentMonthProfits.profits}
-            />
-          </Grid>
           <Grid item lg={4} md={12} sm={12} xs={12}>
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} xs={12} md={6} lg={12}>

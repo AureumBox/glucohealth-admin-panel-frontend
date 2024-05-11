@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { Medicament } from "types/medicament";
-import useOccupationsOptions from "core/occupations/use-occupations-options";
 import { IconCirclePlus, IconTrash } from "@tabler/icons";
 
 const Form: FunctionComponent<Props> = ({
@@ -21,7 +20,6 @@ const Form: FunctionComponent<Props> = ({
   initialValues,
   isUpdate,
 }) => {
-  const occupations = useOccupationsOptions();
 
   return (
     <div className={className}>

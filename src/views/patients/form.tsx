@@ -8,6 +8,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  InputAdornment,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -26,7 +27,6 @@ const Form: FunctionComponent<Props> = ({
   initialValues,
   isUpdate,
 }) => {
-
   return (
     <div className={className}>
       <Formik<FormValues>
@@ -39,9 +39,12 @@ const Form: FunctionComponent<Props> = ({
           email: Yup.string()
             .email("Correo electrónico inválido.")
             .required("El correo electrónico es requerido."),
-          phoneNumber: Yup.string().required(
-            "El número telefónico es requerido."
-          ),
+          phoneNumber: Yup.string()
+            .required("El número telefónico es requerido.")
+            .matches(
+              /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
+              "Ingrese un numero de teléfono válido"
+            ),
           nationalId: Yup.string().required("El NUI es requerido."),
           birthDate: Yup.string().nullable(),
           heightInCm: Yup.string().nullable(),
@@ -120,7 +123,8 @@ const Form: FunctionComponent<Props> = ({
                   label="Fecha de nacimiento"
                   value={dayjs(values.birthDate)}
                   onChange={(newValue: any) => {
-                    const newValueFormatted = newValue?.format("DD-MM-YYYY") || null;
+                    const newValueFormatted =
+                      newValue?.format("DD-MM-YYYY") || null;
                     handleChange({
                       target: {
                         name: "birthDate",
@@ -128,15 +132,20 @@ const Form: FunctionComponent<Props> = ({
                         value: newValueFormatted || null,
                       },
                     });
-                    console.log(newValueFormatted)
+                    console.log(newValueFormatted);
                   }}
                 />
               </FormControl>
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="weightInKg"
-                  label="Peso (kg)"
+                  label="Peso"
                   variant="outlined"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">kg</InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.weightInKg}
@@ -148,8 +157,13 @@ const Form: FunctionComponent<Props> = ({
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="heightInCm"
-                  label="Altura (cm)"
+                  label="Altura"
                   variant="outlined"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">cm</InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.heightInCm}

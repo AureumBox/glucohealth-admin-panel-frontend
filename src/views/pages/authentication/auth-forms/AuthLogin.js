@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import {
   Box,
   Button,
@@ -13,23 +13,23 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
-} from '@mui/material';
+} from "@mui/material";
 
 // third party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+import * as Yup from "yup";
+import { Formik } from "formik";
 
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from "components/extended/AnimateButton";
 
 // assets
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import login from 'services/auth/login';
-import { authUser } from 'store/authSlice';
-import { useAppDispatch, useAppSelector } from 'store';
-import { useNavigate } from 'react-router-dom';
+import login from "services/auth/login";
+import { authUser } from "store/authSlice";
+import { useAppDispatch, useAppSelector } from "store";
+import { useNavigate } from "react-router-dom";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -58,26 +58,34 @@ const FirebaseLogin = ({ ...others }) => {
     <>
       <Formik
         initialValues={{
-          employeeEmail: '',
-          password: '',
-          submit: null
+          employeeEmail: "",
+          password: "",
+          submit: null,
         }}
         validationSchema={Yup.object().shape({
-          employeeEmail: Yup.string().email('Necesita ser un email valido').max(255).required('El email es requierido'),
-          password: Yup.string().max(255).required('Contraseña es requerida')
+          employeeEmail: Yup.string()
+            .email("Necesita ser un email valido")
+            .max(255)
+            .required("El email es requierido"),
+          password: Yup.string().max(255).required("Contraseña es requerida"),
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            /*
-            const user = await login({
-              employeeEmail: values.employeeEmail,
-              password: values.password
+            const { employeeEmail, password } = values;
+            const res = await login({
+              email: employeeEmail,
+              password: password,
             });
-            */
-            dispatch(authUser({ ...{employeeEmail: 'aemail', password: 'a'}, remember: rememberCheck }));
+            console.log(res);
+            dispatch(
+              authUser({
+                ...{ token: res.token, remember: rememberCheck },
+                remember: rememberCheck,
+              })
+            );
             setErrors({ submit: null });
             setSubmitting(true);
-            navigate('/dashboard');
+            navigate("/dashboard");
           } catch (error) {
             setErrors({ submit: error.getMessage() });
             setStatus({ success: false });
@@ -85,10 +93,24 @@ const FirebaseLogin = ({ ...others }) => {
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+        {({
+          errors,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          isSubmitting,
+          touched,
+          values,
+        }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
-            <FormControl fullWidth error={Boolean(touched.employeeEmail && errors.employeeEmail)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-email-login">Email</InputLabel>
+            <FormControl
+              fullWidth
+              error={Boolean(touched.employeeEmail && errors.employeeEmail)}
+              sx={{ ...theme.typography.customInput }}
+            >
+              <InputLabel htmlFor="outlined-adornment-email-login">
+                Email
+              </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email-login"
                 type="email"
@@ -100,17 +122,26 @@ const FirebaseLogin = ({ ...others }) => {
                 inputProps={{}}
               />
               {touched.employeeEmail && errors.employeeEmail && (
-                <FormHelperText error id="standard-weight-helper-text-email-login">
+                <FormHelperText
+                  error
+                  id="standard-weight-helper-text-email-login"
+                >
                   {errors.employeeEmail}
                 </FormHelperText>
               )}
             </FormControl>
 
-            <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
+            <FormControl
+              fullWidth
+              error={Boolean(touched.password && errors.password)}
+              sx={{ ...theme.typography.customInput }}
+            >
+              <InputLabel htmlFor="outlined-adornment-password-login">
+                Password
+              </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password-login"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 value={values.password}
                 name="password"
                 onBlur={handleBlur}
@@ -132,19 +163,28 @@ const FirebaseLogin = ({ ...others }) => {
                 inputProps={{}}
               />
               {touched.password && errors.password && (
-                <FormHelperText error id="standard-weight-helper-text-password-login">
+                <FormHelperText
+                  error
+                  id="standard-weight-helper-text-password-login"
+                >
                   {errors.password}
                 </FormHelperText>
               )}
             </FormControl>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              spacing={1}
+            >
               <FormControlLabel
                 control={
-                  <Checkbox 
-                  checked={rememberCheck} 
-                  onChange={(event) => setRememberCheck(event.target.checked)} 
-                  name="remember" 
-                  color="primary" />
+                  <Checkbox
+                    checked={rememberCheck}
+                    onChange={(event) => setRememberCheck(event.target.checked)}
+                    name="remember"
+                    color="primary"
+                  />
                 }
                 name="remember"
                 label="Recordar contraseña"
@@ -158,7 +198,15 @@ const FirebaseLogin = ({ ...others }) => {
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button
+                  disableElevation
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                >
                   Entrar
                 </Button>
               </AnimateButton>

@@ -39,7 +39,7 @@ const Form: FunctionComponent<Props> = ({
           phoneNumber: Yup.string().required(
             "El número telefónico es requerido."
           ),
-          nationalId: Yup.string().required("El NUI es requerido."),
+          nationalId: Yup.string().required("La CI es requerida."),
         })}
         onSubmit={onSubmit as any}
       >
@@ -96,7 +96,7 @@ const Form: FunctionComponent<Props> = ({
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="nationalId"
-                  label="NUI"
+                  label="CI"
                   variant="outlined"
                   onBlur={handleBlur}
                   onChange={handleChange}

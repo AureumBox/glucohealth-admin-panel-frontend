@@ -45,7 +45,7 @@ const Form: FunctionComponent<Props> = ({
               /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
               "Ingrese un numero de teléfono válido"
             ),
-          nationalId: Yup.string().required("El NUI es requerido."),
+          nationalId: Yup.string().required("La CI es requerida."),
           birthDate: Yup.string().nullable(),
           heightInCm: Yup.string().nullable(),
           weightInKg: Yup.string().nullable(),
@@ -108,7 +108,7 @@ const Form: FunctionComponent<Props> = ({
               <FormControl className="field-form" fullWidth>
                 <TextField
                   id="nationalId"
-                  label="NUI *"
+                  label="CI *"
                   variant="outlined"
                   onBlur={handleBlur}
                   onChange={handleChange}

@@ -46,7 +46,7 @@ const Form: FunctionComponent<Props> = ({
               "Ingrese un numero de teléfono válido"
             ),
           nationalId: Yup.string().required("La CI es requerida."),
-          birthDate: Yup.string().nullable(),
+          birthdate: Yup.string().nullable(),
           heightInCm: Yup.string().nullable(),
           weightInKg: Yup.string().nullable(),
         })}
@@ -121,19 +121,19 @@ const Form: FunctionComponent<Props> = ({
               <FormControl className="field-form" fullWidth>
                 <DatePicker
                   label="Fecha de nacimiento"
-                  value={dayjs(values.birthDate)}
-                  onChange={(newValue: any) => {
-                    const newValueFormatted =
-                      newValue?.format("DD-MM-YYYY") || null;
+                  value={dayjs(values.birthdate)}
+                  onChange={(newValue) => {
                     handleChange({
                       target: {
-                        name: "birthDate",
-                        id: "birthDate",
-                        value: newValueFormatted || null,
+                        name: "birthdate",
+                        id: "birthdate",
+                        value: newValue || null,
                       },
                     });
-                    console.log(newValueFormatted);
+                    console.log(newValue);
                   }}
+                  maxDate={dayjs().subtract(1, "year")} 
+                  defaultValue={null} 
                 />
               </FormControl>
               <FormControl className="field-form" fullWidth>

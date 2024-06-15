@@ -38,7 +38,7 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
           email: values.email,
           phoneNumber: values.phoneNumber,
           nationalId: values.nationalId,
-          birthDate: values.birthDate,
+          birthdate: values.birthdate,
           weightInKg: values.weightInKg,
           heightInCm: values.heightInCm,
         };
@@ -80,7 +80,7 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
           email: "",
           phoneNumber: "",
           nationalId: "",
-          birthDate: null,
+          birthdate: null,
           weightInKg: null,
           heightInCm: null,
           submit: null,

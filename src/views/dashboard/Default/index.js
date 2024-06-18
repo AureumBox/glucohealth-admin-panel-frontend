@@ -61,50 +61,52 @@ const Dashboard = () => {
   }, [fetchProfits]);
 
   return (
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Grid container spacing={gridSpacing}>
-          <Grid item lg={4} md={6} sm={6} xs={12}>
-            <EarningCard
-              isLoading={isLoading}
-              label="Ganancias totales"
-              amount={totalProfits.profits}
-            />
-          </Grid>
-          <Grid item lg={4} md={12} sm={12} xs={12}>
-            <Grid container spacing={gridSpacing}>
-              <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeDarkCard
-                  isLoading={isLoading}
-                  label="Cantidad de órdenes de hoy"
-                  amount={todayProfits.numberOfPaidOrders}
-                />
-              </Grid>
-              <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeLightCard
-                  isLoading={isLoading}
-                  label="Cantidad de órdenes de este mes"
-                  amount={currentMonthProfits.numberOfPaidOrders}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container spacing={gridSpacing}>
-          {/* <Grid item xs={12} md={8}>
-            <TotalGrowthBarChart isLoading={isLoading} />
-          </Grid> */}
-          <Grid item xs={12} md={4}>
-            <PopularCard
-              isLoading={isLoading}
-              services={totalProfits.bestSellingServices}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+    //   <Grid container spacing={gridSpacing}>
+    //     <Grid item xs={12}>
+    //       <Grid container spacing={gridSpacing}>
+    //         <Grid item lg={4} md={6} sm={6} xs={12}>
+    //           <EarningCard
+    //             isLoading={isLoading}
+    //             label="Ganancias totales"
+    //             amount={totalProfits.profits}
+    //           />
+    //         </Grid>
+    //         <Grid item lg={4} md={12} sm={12} xs={12}>
+    //           <Grid container spacing={gridSpacing}>
+    //             <Grid item sm={6} xs={12} md={6} lg={12}>
+    //               <TotalIncomeDarkCard
+    //                 isLoading={isLoading}
+    //                 label="Cantidad de órdenes de hoy"
+    //                 amount={todayProfits.numberOfPaidOrders}
+    //               />
+    //             </Grid>
+    //             <Grid item sm={6} xs={12} md={6} lg={12}>
+    //               <TotalIncomeLightCard
+    //                 isLoading={isLoading}
+    //                 label="Cantidad de órdenes de este mes"
+    //                 amount={currentMonthProfits.numberOfPaidOrders}
+    //               />
+    //             </Grid>
+    //           </Grid>
+    //         </Grid>
+    //       </Grid>
+    //     </Grid>
+    //     <Grid item xs={12}>
+    //       <Grid container spacing={gridSpacing}>
+    //         {/* <Grid item xs={12} md={8}>
+    //           <TotalGrowthBarChart isLoading={isLoading} />
+    //         </Grid> */}
+    //         <Grid item xs={12} md={4}>
+    //           <PopularCard
+    //             isLoading={isLoading}
+    //             services={totalProfits.bestSellingServices}
+    //           />
+    //         </Grid>
+    //       </Grid>
+    //     </Grid>
+    //   </Grid>
+    // );
+    <p>Seleccione un elemento a la izquierda</p>
   );
 };
 

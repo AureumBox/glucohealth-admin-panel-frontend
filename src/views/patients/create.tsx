@@ -84,6 +84,7 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
           weightInKg: null,
           heightInCm: null,
           submit: null,
+          agreeToTerms: false,
         }}
         title={"Crear paciente"}
         onSubmit={onSubmit}

@@ -18,6 +18,10 @@ import usePatientId from "./use-patient-by-id";
 import { FormikHelpers } from "formik";
 import editPatient, { PatientPayload } from "services/patients/edit-patient";
 
+interface Patient extends PatientPayload {
+  agreeToTerms: boolean;
+}
+
 const EditPatient: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -26,7 +30,7 @@ const EditPatient: FunctionComponent<Props> = ({ className }) => {
 
   const onSubmit = useCallback(
     async (
-      values: PatientPayload & {
+      values: Patient & {
         submit: null | string;
       },
       { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
@@ -73,6 +77,7 @@ const EditPatient: FunctionComponent<Props> = ({ className }) => {
           initialValues={{
             ...patient,
             submit: null,
+            agreeToTerms: false, // Añadir este campo
           }}
           title={"Editar paciente"}
           onSubmit={onSubmit}

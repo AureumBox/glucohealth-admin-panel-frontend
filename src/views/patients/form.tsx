@@ -8,12 +8,15 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  FormControlLabel,
   InputAdornment,
   InputLabel,
   ListItemText,
   MenuItem,
   Select,
   TextField,
+  Typography,
+  Checkbox,
 } from "@mui/material";
 import styled from "styled-components";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -49,6 +52,8 @@ const Form: FunctionComponent<Props> = ({
           birthdate: Yup.string().nullable(),
           heightInCm: Yup.string().nullable(),
           weightInKg: Yup.string().nullable(),
+          agreeToTerms: Yup.boolean().oneOf([true], "Debe aceptar los términos y condiciones."),
+
         })}
         onSubmit={onSubmit as any}
       >
@@ -172,6 +177,27 @@ const Form: FunctionComponent<Props> = ({
                   name="heightInCm"
                 />
               </FormControl>
+              <FormControl className="field-form" fullWidth>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={values.agreeToTerms}
+                    onChange={handleChange}
+                    name="agreeToTerms"
+                    color="primary"
+                  />
+                }
+                label="Para utilizar la app web Gluco Health, que facilita el control de la Diabetes Mellitus tipo 2, autorizo el uso de mis datos personales y de salud (como información de contacto, niveles de glucosa y hábitos de bienestar) para seguimiento personalizado, generación de reportes, recordatorios y mejoras del servicio, bajo estricta confidencialidad y conforme a las normativas vigentes. Entiendo que mis datos no serán compartidos con terceros sin mi autorización, salvo por obligación legal, y que si no acepto, no podré usar la aplicación. *"
+              />
+              {errors.agreeToTerms && (
+                <FormHelperText error>{errors.agreeToTerms}</FormHelperText>
+              )}
+            </FormControl>
+            {values.agreeToTerms && (
+              <Typography variant="body2" color="textSecondary">
+                El paciente está de acuerdo en que se usen sus datos personales.
+              </Typography>
+            )}
             </MainCard>
             <MainCard className={"form-data flex-column"}>
               {errors.submit && (
@@ -198,6 +224,7 @@ interface Props {
 
 export interface FormValues extends Patient {
   submit: string | null;
+  agreeToTerms: boolean;
 }
 
 export type OnSubmit = (

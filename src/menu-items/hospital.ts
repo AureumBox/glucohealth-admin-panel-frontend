@@ -1,4 +1,4 @@
-import { IconNurse, IconUsers, IconPill  } from "@tabler/icons";
+import { IconNurse, IconUsers, IconPill, IconLayoutNavbarExpand  } from "@tabler/icons";
 import { MenuItem, MenuItemType } from "./types";
 
 const other: MenuItem = {
@@ -74,6 +74,29 @@ const other: MenuItem = {
           breadcrumbs: false,
         },
       ],
+    },
+    {
+      id: "forum",
+      title: "Foro",
+      type: MenuItemType.Collapse,
+      icon: IconLayoutNavbarExpand,
+      breadcrumbs: false,
+      children: [
+        {
+          id: "list-forum",
+          title: "Lista de foros",
+          type: MenuItemType.Item,
+          url: "/forum",
+          breadcrumbs: false,
+        },
+        {
+          id: "create-forum",
+          title: "Crear foro",
+          type: MenuItemType.Item,
+          url: "/forum/create",
+          breadcrumbs: false,
+        },
+      ]
     },
   ],
 };

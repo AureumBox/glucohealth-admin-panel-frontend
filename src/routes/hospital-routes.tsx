@@ -13,6 +13,9 @@ import Medicaments from 'views/medicaments'
 import CreateMedicament from 'views/medicaments/create'
 import EditMedicament from 'views/medicaments/edit'
 
+import Forum from 'views/forum'
+import CreateForum from 'views/forum/create'
+
 const HospitalRoutes: RouteObject[] = [
   {
     path: 'nurses',
@@ -49,7 +52,19 @@ const HospitalRoutes: RouteObject[] = [
   {
     path: 'medicaments/edit/:id',
     element: <EditMedicament />
+  },  
+  {
+    path: 'forum',
+    element: <Forum />
   },
+  {
+    path: 'forum/create',
+    element: <CreateForum />
+  },/*
+ {
+    path: 'foro/edit/:id',  
+    element: <Editforo /> 
+  },*/
 ]
 
 export default HospitalRoutes

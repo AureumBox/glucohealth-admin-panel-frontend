@@ -96,6 +96,13 @@ const other: MenuItem = {
           url: "/forum/create",
           breadcrumbs: false,
         },
+        {
+          id: "createVideoForum",
+          title: "Crear Video",
+          type: MenuItemType.Item,
+          url: "/forum/create-video",
+          breadcrumbs: false,
+        },
       ]
     },
   ],

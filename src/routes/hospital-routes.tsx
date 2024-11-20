@@ -15,6 +15,7 @@ import EditMedicament from 'views/medicaments/edit'
 
 import Forum from 'views/forum'
 import CreateForum from 'views/forum/create'
+import CreateVideoForum from 'views/forum/create-video'
 
 const HospitalRoutes: RouteObject[] = [
   {
@@ -65,6 +66,10 @@ const HospitalRoutes: RouteObject[] = [
     path: 'foro/edit/:id',  
     element: <Editforo /> 
   },*/
+  {
+    path: 'forum/create-video',
+    element: <CreateVideoForum />
+  },
 ]
 
 export default HospitalRoutes

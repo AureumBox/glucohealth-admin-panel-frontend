@@ -16,6 +16,9 @@ import { FormikHelpers } from "formik";
 import createPatient, {
   PatientPayload,
 } from "services/patients/create-patient";
+import createImc, {
+  ImcPayload,
+} from "services/patients/create-imc";
 
 const CreatePatient: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
@@ -43,11 +46,25 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
           heightInCm: values.heightInCm,
         };
         console.log(payload);
-        await createPatient(payload);
+        const createdPatient = await createPatient(payload);
+        
+        // Calcular y guardar el IMC        
+        const imcPayload: ImcPayload = {
+          patientId: Number(createdPatient.id), // Asumiendo que el ID del paciente es el nationalId          ,
+          date: new Date()
+            .toISOString()
+            .replace("T", " ") // Reemplaza 'T' por espacio
+            .split(".")[0], // Remueve milisegundos
+          weightInKg: Number(payload.weightInKg ?? 0),
+          heightInCm: Number(payload.heightInCm ?? 0),
+        };
+        console.log("pepe,", imcPayload);
+        await createImc(imcPayload);
+
         navigate("/patients");
         dispatch(
           setSuccessMessage(`Paciente ${values.fullName} creado correctamente`)
-        );
+        );        
       } catch (error) {
         if (error instanceof BackendError) {
           setErrors({

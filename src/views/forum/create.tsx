@@ -13,58 +13,40 @@ import {
 import { useAppDispatch } from "../../store/index";
 import Form, { FormValues } from "./form";
 import { FormikHelpers } from "formik";
-import createPatient, {
-  PatientPayload,
-} from "services/patients/create-patient";
-import createImc, {
-  ImcPayload,
-} from "services/patients/create-imc";
+import createMedicament, {
+  MedicamentPayload,
+} from "services/medicaments/create-medicament";
 
-const CreatePatient: FunctionComponent<Props> = ({ className }) => {
+const CreateForum: FunctionComponent<Props> = ({ className }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const onSubmit = useCallback(
     async (
-      values: PatientPayload & {
+      values: MedicamentPayload & {
         submit: string | null;
       },
       { setErrors, setStatus, setSubmitting }: FormikHelpers<FormValues>
     ) => {
       try {
+        console.log('l')
         dispatch(setIsLoading(true));
         setErrors({});
         setStatus({});
         setSubmitting(true);
-        const payload: PatientPayload = {
-          fullName: values.fullName,
-          email: values.email,
-          phoneNumber: values.phoneNumber,
-          nationalId: values.nationalId,
-          birthdate: values.birthdate,
-          weightInKg: values.weightInKg,
-          heightInCm: values.heightInCm,
+        const payload: MedicamentPayload = {
+          tradeName: values.tradeName,
+          genericName: values.genericName,
+          description: values.description,
+          sideEffects: values.sideEffects,
+          presentations: values.presentations,
         };
         console.log(payload);
-        const createdPatient = await createPatient(payload);
-        
-        // Calcular y guardar el IMC        
-        const imcPayload: ImcPayload = {
-          patientId: Number(createdPatient.id), // Asumiendo que el ID del paciente es el nationalId          ,
-          date: new Date()
-            .toISOString()
-            .replace("T", " ") // Reemplaza 'T' por espacio
-            .split(".")[0], // Remueve milisegundos
-          weightInKg: Number(payload.weightInKg ?? 0),
-          heightInCm: Number(payload.heightInCm ?? 0),
-        };
-        console.log("pepe,", imcPayload);
-        await createImc(imcPayload);
-
-        navigate("/patients");
+        await createMedicament(payload);
+        navigate("/medicaments");
         dispatch(
-          setSuccessMessage(`Paciente ${values.fullName} creado correctamente`)
-        );        
+          setSuccessMessage(`Medicamento ${values.tradeName ? values.tradeName : values.genericName } creado correctamente`)
+        );
       } catch (error) {
         if (error instanceof BackendError) {
           setErrors({
@@ -86,24 +68,21 @@ const CreatePatient: FunctionComponent<Props> = ({ className }) => {
     <div className={className}>
       <MainCard>
         <Typography variant="h3" component="h3">
-          Pacientes
+          Foro
         </Typography>
       </MainCard>
 
       <Form
         initialValues={{
           id: "",
-          fullName: "",
-          email: "",
-          phoneNumber: "",
-          nationalId: "",
-          birthdate: null,
-          weightInKg: null,
-          heightInCm: null,
+          tradeName: null,
+          genericName: "",
+          description: "",
+          sideEffects: [],
+          presentations: [],
           submit: null,
-          agreeToTerms: false,
         }}
-        title={"Crear paciente"}
+        title={"Crear foro"}
         onSubmit={onSubmit}
       />
     </div>
@@ -114,7 +93,7 @@ interface Props {
   className?: string;
 }
 
-export default styled(CreatePatient)`
+export default styled(CreateForum)`
   display: flex;
   flex-direction: column;
 

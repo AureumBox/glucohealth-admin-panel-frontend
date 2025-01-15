@@ -75,7 +75,7 @@ const other: MenuItem = {
         },
       ],
     },
-    {
+    /*{
       id: "forum",
       title: "Foro",
       type: MenuItemType.Collapse,
@@ -104,7 +104,7 @@ const other: MenuItem = {
           breadcrumbs: false,
         },
       ]
-    },
+    },*/
   ],
 };
 
